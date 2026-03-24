@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Manrope:wght@200;400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "tertiary-fixed-dim": "#f67ca3",
+              "on-primary-container": "#2b006e",
+              "tertiary-dim": "#f0779d",
+              "on-secondary-fixed": "#4b147d",
+              "surface-container-low": "#131315",
+              "tertiary-fixed": "#ff8eb0",
+              "on-tertiary-fixed": "#380018",
+              "on-primary-fixed": "#000000",
+              "surface-tint": "#ba9eff",
+              "inverse-surface": "#fcf8fb",
+              "surface": "#0e0e10",
+              "surface-variant": "#262528",
+              "secondary-fixed": "#e4c6ff",
+              "inverse-primary": "#6e39db",
+              "primary-fixed-dim": "#a27cff",
+              "tertiary-container": "#fd81a8",
+              "secondary": "#c08cf7",
+              "outline-variant": "#48474a",
+              "surface-container-highest": "#262528",
+              "on-tertiary": "#6a0934",
+              "on-surface-variant": "#acaaad",
+              "error": "#ff6e84",
+              "surface-dim": "#0e0e10",
+              "error-container": "#a70138",
+              "on-surface": "#f6f3f5",
+              "primary-dim": "#8553f3",
+              "on-secondary": "#390068",
+              "surface-bright": "#2c2c2f",
+              "primary": "#ba9eff",
+              "on-primary": "#39008c",
+              "background": "#0e0e10",
+              "on-error": "#490013",
+              "surface-container-lowest": "#000000",
+              "on-secondary-container": "#e3c4ff",
+              "primary-container": "#ae8dff",
+              "on-primary-fixed-variant": "#370086",
+              "on-error-container": "#ffb2b9",
+              "inverse-on-surface": "#555557",
+              "secondary-container": "#5e2c91",
+              "primary-fixed": "#ae8dff",
+              "on-tertiary-container": "#59002a",
+              "on-secondary-fixed-variant": "#69379c",
+              "outline": "#767577",
+              "tertiary": "#ff97b5",
+              "surface-container-high": "#1f1f22",
+              "secondary-dim": "#bb87f1",
+              "on-background": "#f6f3f5",
+              "error-dim": "#d73357",
+              "surface-container": "#19191c",
+              "secondary-fixed-dim": "#dab4ff",
+              "on-tertiary-fixed-variant": "#701039"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(31, 31, 34, 0.7);
+            backdrop-filter: blur(20px);
+        }
+        .primary-gradient {
+            background: linear-gradient(135deg, #ba9eff 0%, #8553f3 100%);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body selection:bg-primary/30">
+<!-- SideNavBar Shell -->
+<aside class="h-screen w-64 fixed left-0 top-0 border-r-0 bg-[#131315] dark:bg-[#131315] flex flex-col h-full py-8 px-4 font-['Manrope'] tracking-tight z-50">
+<div class="mb-12 px-2 flex items-center gap-3">
+<div class="w-8 h-8 primary-gradient rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary-fixed text-lg" style="font-variation-settings: 'FILL' 1;">movie_filter</span>
+</div>
+<div>
+<h1 class="text-2xl font-black tracking-tighter text-[#ba9eff]">Recast</h1>
+<p class="text-[10px] uppercase tracking-[0.2em] text-on-surface-variant font-bold">Professional Suite</p>
+</div>
+</div>
+<nav class="flex-1 space-y-2">
+<!-- Active State Logic: Dashboard is current -->
+<a class="flex items-center gap-3 px-4 py-3 text-[#ba9eff] font-bold bg-[#1f1f22] rounded-lg transition-transform scale-95 active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#acaaad] hover:text-[#f6f3f5] hover:bg-[#1f1f22] transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="mic">mic</span>
+<span>Episodes</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#acaaad] hover:text-[#f6f3f5] hover:bg-[#1f1f22] transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="video_library">video_library</span>
+<span>Clips</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#acaaad] hover:text-[#f6f3f5] hover:bg-[#1f1f22] transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="insights">insights</span>
+<span>Analytics</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#acaaad] hover:text-[#f6f3f5] hover:bg-[#1f1f22] transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span>Settings</span>
+</a>
+</nav>
+<div class="pt-8 border-t border-outline-variant/10 space-y-2">
+<a class="flex items-center gap-3 px-4 py-3 text-[#acaaad] hover:text-[#f6f3f5] hover:bg-[#1f1f22] transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+<span>Profile</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#acaaad] hover:text-[#f6f3f5] hover:bg-[#1f1f22] transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span>Logout</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-64 min-h-screen">
+<!-- TopAppBar Shell -->
+<header class="sticky top-0 z-40 w-full flex justify-between items-center h-16 px-8 bg-[#0e0e10]/70 backdrop-blur-xl font-['Inter'] text-sm">
+<div class="flex items-center flex-1">
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg">search</span>
+<input class="w-full bg-surface-container-lowest border-none rounded-full py-2 pl-10 pr-4 text-xs focus:ring-1 focus:ring-primary/50 text-on-surface" placeholder="Search episodes or clips..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<button class="opacity-80 hover:opacity-100 transition-opacity text-[#acaaad] hover:text-[#f6f3f5]">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<div class="w-8 h-8 rounded-full overflow-hidden bg-surface-container-high border border-outline-variant/20">
+<img alt="User Avatar" class="w-full h-full object-cover" data-alt="User profile avatar placeholder" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPplXTdwv8FUVDntrxrQB6gJ88xH-8KE_uii68aXyHqgirG0hgFd4KlFr9zC8eAUR902xE5Ri_5iKgQsOV3Z5R9jE2_MKgrfJfJMkZ9zyTw1NljH7Q9WTVWuUVh-kvhIEUEWqk3U615Clql1TvAJtC8W-hjT1HMZyBHlDn1XDGq5ghhFAPKgkhZIcE8q12MoM_zLUh_nhVG7HApXrjJERDMiOi2ZpkWpYg3yVpTwTS8EECVfV1ZDQ_n_EHHsh4wnimmkHiJu2l_Gto"/>
+</div>
+</div>
+</header>
+<!-- Page Canvas -->
+<div class="p-10 max-w-7xl mx-auto">
+<!-- Hero Section / Welcome -->
+<section class="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-8">
+<div>
+<span class="inline-block text-[10px] font-bold tracking-[0.2em] uppercase text-primary mb-3">Workspace Overview</span>
+<h2 class="font-headline text-5xl font-extrabold tracking-tighter text-on-surface leading-tight">
+                        Welcome back, <span class="text-primary">Alex</span>!<br/>
+<span class="text-on-surface-variant/60">Let's get your episodes into the spotlight.</span>
+</h2>
+</div>
+<div>
+<button class="primary-gradient text-on-primary-fixed font-bold py-4 px-8 rounded-xl flex items-center gap-3 shadow-lg shadow-primary/20 scale-100 hover:scale-[1.02] active:scale-[0.98] transition-all">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">add_circle</span>
+<span>Upload Episode</span>
+</button>
+</div>
+</section>
+<!-- Stats Grid: Bento Style -->
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
+<!-- Total Episodes -->
+<div class="bg-surface-container-low p-6 rounded-xl border border-transparent hover:border-outline-variant/20 transition-all group">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-primary/10 rounded-lg text-primary">
+<span class="material-symbols-outlined">video_library</span>
+</div>
+<span class="text-[10px] font-bold text-tertiary tracking-wider">+12%</span>
+</div>
+<p class="text-on-surface-variant text-xs uppercase tracking-widest font-semibold mb-1">Total Episodes</p>
+<h3 class="text-3xl font-headline font-bold text-on-surface">42</h3>
+</div>
+<!-- Clips Generated -->
+<div class="bg-surface-container-low p-6 rounded-xl border border-transparent hover:border-outline-variant/20 transition-all group">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-primary/10 rounded-lg text-primary">
+<span class="material-symbols-outlined">content_cut</span>
+</div>
+<span class="text-[10px] font-bold text-tertiary tracking-wider">+24%</span>
+</div>
+<p class="text-on-surface-variant text-xs uppercase tracking-widest font-semibold mb-1">Clips Generated</p>
+<h3 class="text-3xl font-headline font-bold text-on-surface">186</h3>
+</div>
+<!-- Minutes Transcribed -->
+<div class="bg-surface-container-low p-6 rounded-xl border border-transparent hover:border-outline-variant/20 transition-all group">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-primary/10 rounded-lg text-primary">
+<span class="material-symbols-outlined">timer</span>
+</div>
+<span class="text-[10px] font-bold text-on-surface-variant tracking-wider">Stable</span>
+</div>
+<p class="text-on-surface-variant text-xs uppercase tracking-widest font-semibold mb-1">Minutes Transcribed</p>
+<h3 class="text-3xl font-headline font-bold text-on-surface">2,480</h3>
+</div>
+<!-- Exports -->
+<div class="bg-surface-container-low p-6 rounded-xl border border-transparent hover:border-outline-variant/20 transition-all group">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-primary/10 rounded-lg text-primary">
+<span class="material-symbols-outlined">ios_share</span>
+</div>
+<span class="text-[10px] font-bold text-tertiary tracking-wider">+8%</span>
+</div>
+<p class="text-on-surface-variant text-xs uppercase tracking-widest font-semibold mb-1">Total Exports</p>
+<h3 class="text-3xl font-headline font-bold text-on-surface">94</h3>
+</div>
+</section>
+<!-- Table Section -->
+<section class="bg-surface-container-low rounded-xl overflow-hidden">
+<div class="p-6 flex items-center justify-between border-b border-outline-variant/10">
+<h4 class="font-headline text-xl font-bold">Recent Episodes</h4>
+<button class="text-primary text-xs font-bold flex items-center gap-1 hover:underline">
+                        View All Episodes <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="text-on-surface-variant text-[10px] uppercase tracking-widest border-b border-outline-variant/5">
+<th class="px-8 py-4 font-bold">Episode Name</th>
+<th class="px-8 py-4 font-bold">Date Uploaded</th>
+<th class="px-8 py-4 font-bold">Duration</th>
+<th class="px-8 py-4 font-bold">Status</th>
+<th class="px-8 py-4 font-bold text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/5">
+<!-- Row 1 -->
+<tr class="group hover:bg-surface-container-high transition-colors">
+<td class="px-8 py-5">
+<div class="flex items-center gap-4">
+<div class="w-16 h-10 bg-surface-container-highest rounded-lg flex-shrink-0 relative overflow-hidden">
+<div class="absolute inset-0 primary-gradient opacity-10"></div>
+<img alt="Episode Thumbnail" class="w-full h-full object-cover" data-alt="Abstract cinematic podcast thumbnail with purple tones" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC922Zs8J2XJKCvD0Wbz51UAOd-0ptHZljrGq_DQYSYJBpSmBWRrAx4nGuAKr_a2dnX7dkJhYpDsFfxzGFvPaE2BUNb3GqGoAUNzKlI2dDGjLttqbTpsX4TXC-mRRGUpMRf_6xU88FSIP2gf77GVc7KDAXQUVXjNwkfa4ScqLPGNDZw8E4WpJLrVUijsYbDDagBa2s_jzmGild4G8_eLUwB6VnxqJOIsgZFyhidcRMWjICHGLb7J1Ddk8v6RyPTzyXzxD3nxcMnPamt"/>
+</div>
+<div>
+<p class="text-sm font-bold text-on-surface group-hover:text-primary transition-colors">The Future of AI in Video Editing</p>
+<p class="text-[10px] text-on-surface-variant">ID: #RC-9904</p>
+</div>
+</div>
+</td>
+<td class="px-8 py-5 text-sm text-on-surface-variant font-medium">Oct 24, 2023</td>
+<td class="px-8 py-5 text-sm text-on-surface-variant font-medium">48:12</td>
+<td class="px-8 py-5">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold bg-primary/10 text-primary uppercase tracking-tighter">
+<span class="w-1 h-1 rounded-full bg-primary"></span>
+                                        Processing
+                                    </span>
+</td>
+<td class="px-8 py-5 text-right">
+<button class="text-on-surface-variant hover:text-on-surface">
+<span class="material-symbols-outlined">more_horiz</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="group hover:bg-surface-container-high transition-colors">
+<td class="px-8 py-5">
+<div class="flex items-center gap-4">
+<div class="w-16 h-10 bg-surface-container-highest rounded-lg flex-shrink-0 relative overflow-hidden">
+<img alt="Episode Thumbnail" class="w-full h-full object-cover" data-alt="Dark aesthetic waveform graphic for podcast" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQ7TBjq62ZJk2ggx81bN2SFrlbNkFQC1LpzO7t9H3lBMcHBxIgxlIjoAt3SqojePauvpI0eE98ho5qYUmspgQgClOVhnMty849NOXGsOG_qtOr_s5Ex52d163oUPDjK4qLBNhd8mlLb_tKWnZY0d1NUwvb5e8Un2VV_7_zsfdPDBH5w80vnrjjREbl-W7sqsRn2ad7W2jJAZYMN2Rxq5pYAFcl-MX7bEdyC0SOY48BbbRPNfUxrIkf1P4wWZOmkubnUAgT0tXMx7zm"/>
+</div>
+<div>
+<p class="text-sm font-bold text-on-surface group-hover:text-primary transition-colors">Designing for the Next Billion Users</p>
+<p class="text-[10px] text-on-surface-variant">ID: #RC-9892</p>
+</div>
+</div>
+</td>
+<td class="px-8 py-5 text-sm text-on-surface-variant font-medium">Oct 22, 2023</td>
+<td class="px-8 py-5 text-sm text-on-surface-variant font-medium">32:45</td>
+<td class="px-8 py-5">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-400 uppercase tracking-tighter">
+<span class="w-1 h-1 rounded-full bg-emerald-400"></span>
+                                        Completed
+                                    </span>
+</td>
+<td class="px-8 py-5 text-right">
+<button class="text-on-surface-variant hover:text-on-surface">
+<span class="material-symbols-outlined">more_horiz</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="group hover:bg-surface-container-high transition-colors">
+<td class="px-8 py-5">
+<div class="flex items-center gap-4">
+<div class="w-16 h-10 bg-surface-container-highest rounded-lg flex-shrink-0 relative overflow-hidden">
+<img alt="Episode Thumbnail" class="w-full h-full object-cover" data-alt="Abstract podcast cover with geometric shapes" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTiSzRbfPTXVar1kIyvUrmrJpSHWUnDzVd7gVEH3tZO6wdj4xSvT5n8BdqVx3V06S7oedWovDFcN_uyD5zjGtWyodblQRqTGhp8CONuvb_gZWSjc0k-le73ZQoSl8jg1NPnTtuHSFE7RU1vonWXv_R5HKEMIrgjPd2BWc79GyQS2HuDoCoJcbXYHyuRzrXfFDfSEqFmH75qjqkJgeOwnBSpkcKPiVXYAmjMQ03f-IFnEEWAULZ2FYvi8ctoySn0L-S5khS3AgxuF6e"/>
+</div>
+<div>
+<p class="text-sm font-bold text-on-surface group-hover:text-primary transition-colors">Morning Brew Interview Special</p>
+<p class="text-[10px] text-on-surface-variant">ID: #RC-9881</p>
+</div>
+</div>
+</td>
+<td class="px-8 py-5 text-sm text-on-surface-variant font-medium">Oct 20, 2023</td>
+<td class="px-8 py-5 text-sm text-on-surface-variant font-medium">1:15:00</td>
+<td class="px-8 py-5">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-400 uppercase tracking-tighter">
+<span class="w-1 h-1 rounded-full bg-emerald-400"></span>
+                                        Completed
+                                    </span>
+</td>
+<td class="px-8 py-5 text-right">
+<button class="text-on-surface-variant hover:text-on-surface">
+<span class="material-symbols-outlined">more_horiz</span>
+</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="group hover:bg-surface-container-high transition-colors">
+<td class="px-8 py-5">
+<div class="flex items-center gap-4">
+<div class="w-16 h-10 bg-surface-container-highest rounded-lg flex-shrink-0 relative overflow-hidden">
+<img alt="Episode Thumbnail" class="w-full h-full object-cover" data-alt="Abstract red and black failure state pattern" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDLvIKgxWGUiPmhwxeXOhHAx95qJdldVFLJWHon8iJLHYee4G96UeYRovGrCf3EfnOGbdUKL4AQ39IHpIL801riNrx1XawMUEFcN1qdWeSmFFS32CmDTXdLYH1gDO7hp2Xdr5IC2xpWUx8EacmAv7VqeRLnAwnlzB7P90Z2pyAZeqLzJ-Efy-sVBQ1v7B2KUN10BL0Ux7bTc3gwm4k2Ead2-64DMtYMOoL890jBEUon10oF-CnL0PhjA-B50Rwv_b5JK3qn3K0Bz0Ej"/>
+</div>
+<div>
+<p class="text-sm font-bold text-on-surface group-hover:text-primary transition-colors">Product Hunt Launch: Day 1</p>
+<p class="text-[10px] text-on-surface-variant">ID: #RC-9875</p>
+</div>
+</div>
+</td>
+<td class="px-8 py-5 text-sm text-on-surface-variant font-medium">Oct 19, 2023</td>
+<td class="px-8 py-5 text-sm text-on-surface-variant font-medium">14:02</td>
+<td class="px-8 py-5">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold bg-error/10 text-error uppercase tracking-tighter">
+<span class="w-1 h-1 rounded-full bg-error"></span>
+                                        Failed
+                                    </span>
+</td>
+<td class="px-8 py-5 text-right">
+<button class="text-on-surface-variant hover:text-on-surface">
+<span class="material-symbols-outlined">more_horiz</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</div>
+</main>
+<!-- Floating Playhead (Editorial Element) -->
+<div class="fixed bottom-8 right-8 z-50">
+<div class="glass-panel p-4 rounded-2xl border border-outline-variant/10 shadow-2xl flex items-center gap-4 min-w-[320px]">
+<div class="w-12 h-12 rounded-lg primary-gradient flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-primary-fixed" style="font-variation-settings: 'FILL' 1;">graphic_eq</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-xs font-bold text-on-surface truncate">Processing: The Future of AI...</p>
+<div class="w-full bg-surface-container-highest h-1 rounded-full mt-2 overflow-hidden">
+<div class="bg-primary h-full w-[65%]"></div>
+</div>
+<p class="text-[9px] text-on-surface-variant mt-1 uppercase font-bold tracking-widest">65% Transcribing</p>
+</div>
+<button class="w-8 h-8 rounded-full flex items-center justify-center hover:bg-surface-container-highest">
+<span class="material-symbols-outlined text-sm">close</span>
+</button>
+</div>
+</div>
+</body></html>

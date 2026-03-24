@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Recast | Turn episodes into viral clips</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;400;700;800&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-tertiary": "#6a0934",
+              "on-secondary-fixed": "#4b147d",
+              "on-tertiary-fixed": "#380018",
+              "secondary-fixed": "#e4c6ff",
+              "inverse-surface": "#fcf8fb",
+              "secondary": "#c08cf7",
+              "on-primary-fixed": "#000000",
+              "outline-variant": "#48474a",
+              "tertiary": "#ff97b5",
+              "background": "#0e0e10",
+              "secondary-dim": "#bb87f1",
+              "tertiary-dim": "#f0779d",
+              "on-surface": "#f6f3f5",
+              "surface-container-lowest": "#000000",
+              "primary-container": "#ae8dff",
+              "secondary-container": "#5e2c91",
+              "on-primary-container": "#2b006e",
+              "on-primary-fixed-variant": "#370086",
+              "inverse-on-surface": "#555557",
+              "on-surface-variant": "#acaaad",
+              "on-tertiary-container": "#59002a",
+              "surface": "#0e0e10",
+              "on-background": "#f6f3f5",
+              "surface-bright": "#2c2c2f",
+              "primary": "#ba9eff",
+              "on-error": "#490013",
+              "error-container": "#a70138",
+              "tertiary-container": "#fd81a8",
+              "tertiary-fixed-dim": "#f67ca3",
+              "outline": "#767577",
+              "error-dim": "#d73357",
+              "surface-container": "#19191c",
+              "on-tertiary-fixed-variant": "#701039",
+              "surface-variant": "#262528",
+              "primary-fixed": "#ae8dff",
+              "secondary-fixed-dim": "#dab4ff",
+              "inverse-primary": "#6e39db",
+              "surface-dim": "#0e0e10",
+              "surface-tint": "#ba9eff",
+              "primary-fixed-dim": "#a27cff",
+              "on-secondary-container": "#e3c4ff",
+              "on-primary": "#39008c",
+              "error": "#ff6e84",
+              "surface-container-high": "#1f1f22",
+              "on-secondary-fixed-variant": "#69379c",
+              "surface-container-highest": "#262528",
+              "surface-container-low": "#131315",
+              "on-error-container": "#ffb2b9",
+              "primary-dim": "#8553f3",
+              "on-secondary": "#390068",
+              "tertiary-fixed": "#ff8eb0"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .cinematic-glow {
+            box-shadow: 0 0 40px 8px rgba(186, 158, 255, 0.08);
+        }
+        .glass-panel {
+            background: rgba(38, 37, 40, 0.7);
+            backdrop-filter: blur(20px);
+        }
+        .bg-gradient-signature {
+            background: linear-gradient(135deg, #ba9eff 0%, #8553f3 100%);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body antialiased">
+<!-- Top Navigation Bar -->
+<nav class="fixed top-0 w-full z-50 bg-[#0e0e10] font-['Manrope'] antialiased tracking-tight">
+<div class="flex justify-between items-center px-8 py-4 max-w-screen-2xl mx-auto">
+<div class="text-2xl font-black tracking-tighter text-[#f6f3f5]">Recast</div>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-[#ba9eff] font-bold border-b-2 border-[#ba9eff] pb-1" href="#">Features</a>
+<a class="text-[#acaaad] hover:text-[#f6f3f5] transition-colors" href="#">Pricing</a>
+<a class="text-[#acaaad] hover:text-[#f6f3f5] transition-colors" href="#">Login</a>
+</div>
+<button class="bg-gradient-signature text-on-primary-fixed px-6 py-2 rounded-full font-bold active:scale-95 duration-200 ease-in-out">
+                Get Started Free
+            </button>
+</div>
+</nav>
+<main>
+<!-- Hero Section -->
+<section class="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden">
+<div class="max-w-7xl mx-auto px-8 relative z-10 text-center">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-container-high border border-outline-variant/15 mb-8">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span class="text-[10px] uppercase tracking-[0.15em] font-bold text-on-surface-variant">Now Powered by GPT-4o</span>
+</div>
+<h1 class="font-headline text-5xl md:text-8xl font-extrabold tracking-tighter text-on-background leading-[0.9] mb-8">
+                    Turn episodes into <br/>
+<span class="text-transparent bg-clip-text bg-gradient-signature">viral clips</span>, automatically
+                </h1>
+<p class="max-w-2xl mx-auto text-on-surface-variant text-lg md:text-xl font-light mb-12">
+                    AI-powered transcription, clip detection, and video extraction to grow your audience effortlessly.
+                </p>
+<div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+<button class="bg-gradient-signature text-on-primary-fixed px-10 py-4 rounded-full font-extrabold text-lg active:scale-95 duration-200 ease-in-out cinematic-glow">
+                        Get Started Free
+                    </button>
+<button class="bg-surface-container-highest border border-outline-variant/15 text-primary px-10 py-4 rounded-full font-bold text-lg hover:bg-surface-bright transition-all">
+                        Watch Demo
+                    </button>
+</div>
+</div>
+<!-- Background Aesthetic -->
+<div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full pointer-events-none opacity-20">
+<div class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary blur-[120px] rounded-full"></div>
+<div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary blur-[120px] rounded-full"></div>
+</div>
+</section>
+<!-- Social Proof Ticker -->
+<section class="py-12 bg-surface-container-low border-y border-outline-variant/10 overflow-hidden">
+<div class="max-w-7xl mx-auto px-8">
+<p class="text-center text-[10px] uppercase tracking-[0.2em] text-on-surface-variant font-bold mb-8">Trusted by the world's top creators</p>
+<div class="flex flex-wrap justify-center items-center gap-12 md:gap-24 opacity-40 grayscale hover:grayscale-0 transition-all duration-500">
+<img alt="Logo" class="h-8 w-auto invert" data-alt="Podcast show logo white minimalist" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYdjfLB95lN8SAuSk17rdX5t_yBnIym4Wvq7_uvWyUCufo3lhIbZaQx-KxiVIbZXJfgXIDuYWjArqzYiBGfklGKdoiVJSUMaIYpKdqUrxs3F5fsJIrjRnMDiYR5NL6CKs6-kWGxeM_2HuSZ6KFvgxv-Vl1HZ3RxYNEO-xWsUvIoNKMB9M-kPrXdifOJC--0FDwezqk4o5GuX7M1MRq_h_OfsGHJ48hiiHOzAWbF7z57MnbrqVqukvlLS5dnsBzcJrr7pXzgFdIj7ZT"/>
+<img alt="Logo" class="h-8 w-auto invert" data-alt="Tech news podcast logo white" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCr_NFwRsGpVyXufkZwAKMvRg4y6zwscE0pvLHB1LpDBb9qjNoapY0vSI4BP5waZsrQSx-6Uv5JjwhHVKoLdaG_VlklvQuyZEy20A1y9QFrM4lUERFZxMyKV-1cxOzFBJwf8HQO1oPVpaR5pHvGxlgk-ruWJS8gvXQGBneOp0emlGR0fa-3Vhai4jjd2NyJOZWA-LZaFsAKhTPeRTTfG-V-ISExm4G4SNTa5Cqwq7GWnUnM2mG5Mi02dV-vKa6dzNIGZLoeMNuKiXp8"/>
+<img alt="Logo" class="h-8 w-auto invert" data-alt="Educational media company logo white" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2qu7mdyprE81Gxyaaieoh0ozpa1n65OAY8e_NO3iHO-etvU2_l9kKUMFmZlAhXXGhorEYBSn4XML8OTzv9igo_W_vgTTypuzXoJZG4z0sXSI7p73tpnylNw6OBK0FhXGO9fDSkMoQpVMcncNnm8wyal57zU5AqFzSCDf8IR1untGRY6hAdR4Sq_CtwpkNtOam51iAfZIpTCq8_hn4dikBusTyY0XIN3TMY0MsbNEnOcCNSpgJAeRs_DxSfAStLGuw3YelAP4kqLHe"/>
+<img alt="Logo" class="h-8 w-auto invert" data-alt="Business podcast network logo white" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJFlHStFu-nPBQV-aNqxtsUD7E27mR3VFnP1C4T6yFqsoMrU_nwZ3Jn3ieD0FMisTB1E4oc0Rrg39pCV_4xQrr-nwKtkrBg3M5LWL1A0G2QXMoui5GqMW3Io5K1N4iXatNGqpL6xXMZXtLW4BehI_xhbidifxBP_rVxtpKD-7r73GHkKZNmybYlCbeUndspe8FaZgNivOIFMfWf2aCSHDeoyYbjo2Ngq7kimyXK8axkKoZ4FVDYq2wLD9dgVu681JThGR8l6xuYPgl"/>
+<img alt="Logo" class="h-8 w-auto invert" data-alt="Creative studio logo white" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4dOaEodql2iJS2NjHaXkGZ4Jl5vG3ImeAx3t7Esb63w7eF8T1dpbDiVBC7V6flgO5SrS_zETNF6N0Y5VBUsUpTsFPTPREkOlwpZ7QisNXF97Tn8M3m33WhrJBjcM7rif8O4Sw6mCDZuZ5Kmo_haZcdBASCvmvJQauZWSEix7F3IfY1ep5X7vU90OSxcc85KXeQenof6iORsFaz10tW6sqJjyMYKhf5mlMXJlZzWTZaXu-iqvewrN2rk8LGpuUT_MFBxnRQQmkSeug"/>
+</div>
+</div>
+</section>
+<!-- Features Bento Grid -->
+<section class="py-24 md:py-40 max-w-7xl mx-auto px-8">
+<div class="mb-20">
+<span class="label-md uppercase tracking-[0.1em] text-primary font-bold">Capabilities</span>
+<h2 class="font-headline text-4xl md:text-5xl font-extrabold mt-4">The Editor's Edge</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6 h-auto">
+<!-- AI Transcription Card -->
+<div class="md:col-span-8 bg-surface-container-low p-10 rounded-xl relative overflow-hidden group border border-transparent hover:border-outline-variant/20 transition-all duration-500">
+<div class="relative z-10 flex flex-col h-full justify-between">
+<div>
+<span class="material-symbols-outlined text-primary text-4xl mb-6">transcribe</span>
+<h3 class="text-3xl font-bold mb-4">AI Transcription</h3>
+<p class="text-on-surface-variant max-w-md text-lg">Convert speech to text with 99% accuracy across 50+ languages. Perfect for captions, SEO, and deep search.</p>
+</div>
+<div class="mt-12">
+<div class="bg-surface-container-lowest p-4 rounded-lg font-mono text-sm border border-outline-variant/10 text-on-surface-variant">
+<span class="text-primary">[00:12:45]</span> "The future of content is modular. We need to rethink how we distribute long-form media..."
+                            </div>
+</div>
+</div>
+<div class="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-primary/5 to-transparent"></div>
+</div>
+<!-- Smart Clip Detection Card -->
+<div class="md:col-span-4 bg-surface-container-high p-10 rounded-xl flex flex-col justify-between cinematic-glow border border-outline-variant/10">
+<div>
+<span class="material-symbols-outlined text-tertiary text-4xl mb-6">auto_awesome</span>
+<h3 class="text-2xl font-bold mb-4">Smart Clip Detection</h3>
+<p class="text-on-surface-variant">Our engine automatically identifies high-impact moments for TikTok, Reels, and Shorts.</p>
+</div>
+<div class="mt-8 flex items-center justify-center">
+<div class="w-full h-32 bg-surface-container-lowest rounded-lg overflow-hidden relative">
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary/50 text-5xl">equalizer</span>
+</div>
+<div class="absolute bottom-0 left-0 h-1 bg-gradient-signature w-3/4"></div>
+</div>
+</div>
+</div>
+<!-- Video Export Card -->
+<div class="md:col-span-12 bg-surface-container p-12 rounded-xl border border-outline-variant/15 relative overflow-hidden flex flex-col md:flex-row items-center gap-12">
+<div class="md:w-1/2">
+<span class="material-symbols-outlined text-secondary text-4xl mb-6">ios_share</span>
+<h3 class="text-3xl font-bold mb-4">Video Export</h3>
+<p class="text-on-surface-variant text-lg">One-click export to all social media platforms. Custom templates, dynamic captions, and brand colors baked in instantly.</p>
+<button class="mt-8 flex items-center gap-2 text-primary font-bold group">
+                            Explore Export Options 
+                            <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+</div>
+<div class="md:w-1/2 grid grid-cols-3 gap-4">
+<div class="aspect-square bg-surface-container-high rounded-lg flex items-center justify-center border border-outline-variant/10">
+<span class="material-symbols-outlined text-3xl">play_circle</span>
+</div>
+<div class="aspect-square bg-surface-container-high rounded-lg flex items-center justify-center border border-outline-variant/10">
+<span class="material-symbols-outlined text-3xl">grid_view</span>
+</div>
+<div class="aspect-square bg-surface-container-high rounded-lg flex items-center justify-center border border-outline-variant/10">
+<span class="material-symbols-outlined text-3xl">layers</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- CTA Section -->
+<section class="py-24 md:py-40">
+<div class="max-w-5xl mx-auto px-8">
+<div class="bg-surface-container-highest p-12 md:p-24 rounded-3xl relative overflow-hidden border border-outline-variant/20 text-center">
+<div class="relative z-10">
+<h2 class="font-headline text-4xl md:text-6xl font-extrabold tracking-tight mb-8">Ready to amplify your voice?</h2>
+<p class="text-on-surface-variant text-lg mb-12 max-w-xl mx-auto">Join 5,000+ creators who are scaling their audience using Recast's cinematic AI workflow.</p>
+<button class="bg-gradient-signature text-on-primary-fixed px-12 py-5 rounded-full font-black text-xl active:scale-95 duration-200 ease-in-out">
+                            Get Started Free
+                        </button>
+</div>
+<div class="absolute top-0 left-0 w-full h-full pointer-events-none opacity-40 mix-blend-overlay">
+<div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-primary/20 via-transparent to-transparent"></div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-[#0e0e10] dark:bg-[#0e0e10] w-full border-t border-[#48474a]/15">
+<div class="flex flex-col md:flex-row justify-between items-center px-8 py-12 w-full max-w-screen-2xl mx-auto">
+<div class="flex flex-col gap-4 mb-8 md:mb-0">
+<div class="text-lg font-bold text-[#f6f3f5]">Recast</div>
+<p class="font-['Inter'] text-sm text-[#acaaad] max-w-xs">© 2024 Recast. The Cinematic Lens in Podcasting.</p>
+</div>
+<div class="flex flex-wrap justify-center gap-8">
+<a class="font-['Inter'] text-sm text-[#acaaad] hover:text-[#ba9eff] transition-colors" href="#">Features</a>
+<a class="font-['Inter'] text-sm text-[#acaaad] hover:text-[#ba9eff] transition-colors" href="#">Pricing</a>
+<a class="font-['Inter'] text-sm text-[#acaaad] hover:text-[#ba9eff] transition-colors" href="#">Privacy Policy</a>
+<a class="font-['Inter'] text-sm text-[#acaaad] hover:text-[#ba9eff] transition-colors" href="#">Terms of Service</a>
+<a class="font-['Inter'] text-sm text-[#acaaad] hover:text-[#ba9eff] transition-colors" href="#">Support</a>
+</div>
+<div class="mt-8 md:mt-0 flex gap-4">
+<span class="material-symbols-outlined text-[#acaaad] hover:text-[#ba9eff] cursor-pointer">share</span>
+<span class="material-symbols-outlined text-[#acaaad] hover:text-[#ba9eff] cursor-pointer">mail</span>
+</div>
+</div>
+</footer>
+</body></html>

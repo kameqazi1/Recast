@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;400;600;800&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-container-highest": "#262528",
+              "on-tertiary-fixed": "#380018",
+              "tertiary-dim": "#f0779d",
+              "tertiary-container": "#fd81a8",
+              "on-secondary-container": "#e3c4ff",
+              "outline": "#767577",
+              "surface-variant": "#262528",
+              "primary-container": "#ae8dff",
+              "background": "#0e0e10",
+              "secondary-fixed-dim": "#dab4ff",
+              "on-surface-variant": "#acaaad",
+              "on-primary-fixed-variant": "#370086",
+              "surface-tint": "#ba9eff",
+              "on-primary-fixed": "#000000",
+              "on-secondary-fixed-variant": "#69379c",
+              "inverse-on-surface": "#555557",
+              "surface-dim": "#0e0e10",
+              "primary-dim": "#8553f3",
+              "primary-fixed-dim": "#a27cff",
+              "error": "#ff6e84",
+              "on-tertiary-fixed-variant": "#701039",
+              "secondary": "#c08cf7",
+              "secondary-container": "#5e2c91",
+              "primary-fixed": "#ae8dff",
+              "tertiary-fixed": "#ff8eb0",
+              "on-background": "#f6f3f5",
+              "on-secondary-fixed": "#4b147d",
+              "tertiary": "#ff97b5",
+              "secondary-fixed": "#e4c6ff",
+              "on-tertiary": "#6a0934",
+              "inverse-surface": "#fcf8fb",
+              "secondary-dim": "#bb87f1",
+              "outline-variant": "#48474a",
+              "surface-container-high": "#1f1f22",
+              "surface-bright": "#2c2c2f",
+              "surface-container-lowest": "#000000",
+              "error-container": "#a70138",
+              "surface-container": "#19191c",
+              "primary": "#ba9eff",
+              "on-surface": "#f6f3f5",
+              "inverse-primary": "#6e39db",
+              "on-error": "#490013",
+              "surface": "#0e0e10",
+              "tertiary-fixed-dim": "#f67ca3",
+              "surface-container-low": "#131315",
+              "on-primary": "#39008c",
+              "on-error-container": "#ffb2b9",
+              "on-tertiary-container": "#59002a",
+              "on-primary-container": "#2b006e",
+              "error-dim": "#d73357",
+              "on-secondary": "#390068"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .glass-panel {
+            background: rgba(31, 31, 34, 0.7);
+            backdrop-filter: blur(20px);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body selection:bg-primary selection:text-on-primary-fixed">
+<!-- SideNavBar -->
+<aside class="h-screen w-64 fixed left-0 top-0 border-r-0 bg-[#131315] flex flex-col py-8 px-4 font-['Manrope'] tracking-tight z-50">
+<div class="mb-12 px-2">
+<span class="text-2xl font-black tracking-tighter text-[#ba9eff]">Recast</span>
+<p class="text-[10px] uppercase tracking-[0.2em] text-on-surface-variant mt-1">Professional Suite</p>
+</div>
+<nav class="flex-1 space-y-2">
+<a class="flex items-center gap-3 px-4 py-3 text-[#acaaad] hover:text-[#f6f3f5] hover:bg-[#1f1f22] transition-colors duration-200 rounded-lg scale-95 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<!-- Episodes Active -->
+<a class="flex items-center gap-3 px-4 py-3 text-[#ba9eff] font-bold bg-[#1f1f22] rounded-lg scale-95 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">mic</span>
+<span class="text-sm font-medium">Episodes</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#acaaad] hover:text-[#f6f3f5] hover:bg-[#1f1f22] transition-colors duration-200 rounded-lg scale-95 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">video_library</span>
+<span class="text-sm font-medium">Clips</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#acaaad] hover:text-[#f6f3f5] hover:bg-[#1f1f22] transition-colors duration-200 rounded-lg scale-95 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">insights</span>
+<span class="text-sm font-medium">Analytics</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#acaaad] hover:text-[#f6f3f5] hover:bg-[#1f1f22] transition-colors duration-200 rounded-lg scale-95 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+</nav>
+<div class="pt-8 mt-8 border-t border-outline-variant/10 space-y-2">
+<a class="flex items-center gap-3 px-4 py-3 text-[#acaaad] hover:text-[#f6f3f5] hover:bg-[#1f1f22] transition-colors duration-200 rounded-lg scale-95 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">account_circle</span>
+<span class="text-sm font-medium">Profile</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#acaaad] hover:text-[#f6f3f5] hover:bg-[#1f1f22] transition-colors duration-200 rounded-lg scale-95 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="text-sm font-medium">Logout</span>
+</a>
+</div>
+</aside>
+<!-- Main Canvas -->
+<main class="ml-64 min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="sticky top-0 z-40 w-full bg-[#0e0e10]/70 backdrop-blur-xl flex justify-between items-center h-16 px-8 font-['Inter'] text-sm">
+<div class="flex items-center gap-4 flex-1 max-w-xl">
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-base">search</span>
+<input class="w-full bg-surface-container-lowest border-none rounded-xl pl-10 pr-4 py-2 text-sm focus:ring-1 focus:ring-primary transition-all" placeholder="Search episodes..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<button class="text-[#acaaad] hover:text-[#f6f3f5] opacity-80 hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="h-8 w-8 rounded-full bg-surface-container-highest overflow-hidden cursor-pointer opacity-80 hover:opacity-100 transition-opacity">
+<img alt="User Avatar" class="w-full h-full object-cover" data-alt="User profile avatar placeholder" src="https://lh3.googleusercontent.com/aida-public/AB6AXuArhMjachWL-8XS_BXAVJc1tArS549QwZlb0MZlpGq1eqTWixQH_Fedhc1pM-oiMcl0PJc5Y_13hWtSD-i9-n3DRxGqMTvh-MUTUOgyysahzVU6yWrb-r8Xq6oliTC-m3XRdMSR4swjWj_aDbv8hIsKBJdydf0g5M3hu3WlBryX50DtFQq7cZXxE6yJjOvkeUTVSckJq4Lp8Va4s2TRXbZG2F1jKDtgEveQU3WNMLCbodTPfvdyIgEtFjJ9wqHKsHp5fGbviwKM5NOS"/>
+</div>
+</div>
+</header>
+<!-- Content Area -->
+<div class="px-12 py-8 max-w-7xl mx-auto w-full space-y-12">
+<!-- Hero Video Player Section -->
+<section class="relative aspect-video rounded-xl overflow-hidden group bg-surface-container-low border border-outline-variant/10 shadow-2xl">
+<img alt="Video Placeholder" class="w-full h-full object-cover opacity-60" data-alt="Futuristic dark tech background with neon light pulses" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBdX-GZZtfjTyWZ64LNOmDQIkta8tZanCbTiSe3c8ul1NUrknxm98W78a1kMCdOSczvkDMlrxxmtUirH9ieQB4S6o4FjGbn8LOPnu0IeK0cqRvZUDdnrpZ1O5qsGNHHM152GuXzCRdIkeAGXoWcOvdIqiIYivriMlej6DSFZiEhrI7jBos3Cn2M2WlN_sAgh8fiBaQzTNW6Rv-w3ZxnQuKu3be-ajcQsxnnx5qw0U7Br7f4hXhFll4GYGqJWSZW_qyJILv2fwevcJDS"/>
+<!-- Video Overlay Controls -->
+<div class="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-transparent flex flex-col justify-end p-8">
+<div class="space-y-6">
+<!-- Progress Bar -->
+<div class="relative h-1 w-full bg-surface-container-highest rounded-full overflow-hidden group/progress cursor-pointer">
+<div class="absolute top-0 left-0 h-full w-1/3 bg-gradient-to-r from-primary to-primary-dim"></div>
+<div class="absolute top-1/2 left-1/3 -translate-y-1/2 h-3 w-3 bg-on-background rounded-full scale-0 group-hover/progress:scale-100 transition-transform"></div>
+</div>
+<!-- Actions -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-8">
+<button class="text-on-background hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-4xl" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+<div class="flex items-center gap-4 text-sm font-medium tabular-nums text-on-surface-variant">
+<span class="text-on-background">16:04</span>
+<span>/</span>
+<span>48:12</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant text-xl">volume_up</span>
+<div class="w-24 h-1 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full w-3/4 bg-primary-dim"></div>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:text-on-background transition-colors">
+<span class="material-symbols-outlined">closed_caption</span>
+</button>
+<button class="text-on-surface-variant hover:text-on-background transition-colors">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<button class="text-on-surface-variant hover:text-on-background transition-colors">
+<span class="material-symbols-outlined">fullscreen</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Episode Info Header -->
+<section class="flex flex-col md:flex-row justify-between items-start gap-8">
+<div class="space-y-4 max-w-2xl">
+<div class="flex items-center gap-4">
+<span class="px-3 py-1 bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-widest rounded-full border border-primary/20">Processing</span>
+<span class="text-on-surface-variant text-xs font-medium">Oct 24, 2023 • 48:12 duration</span>
+</div>
+<h1 class="font-headline text-5xl font-black tracking-tighter leading-none text-on-background">
+                        The Future of AI in Video Editing
+                    </h1>
+<p class="text-on-surface-variant text-lg leading-relaxed">
+                        In this episode, we dive deep into neural networks, automated color grading, and how creators are leveraging AI to shrink post-production workflows.
+                    </p>
+</div>
+<div class="flex gap-3">
+<button class="px-6 py-3 bg-surface-container-high rounded-xl text-primary font-bold text-sm border border-outline-variant/20 hover:bg-surface-bright transition-colors">
+                        Share Episode
+                    </button>
+<button class="px-8 py-3 bg-gradient-to-br from-primary to-primary-dim rounded-xl text-on-primary-fixed font-black text-sm shadow-lg shadow-primary/20 scale-100 hover:scale-[1.02] active:scale-[0.98] transition-all">
+                        Download Master
+                    </button>
+</div>
+</section>
+<!-- Tabbed Interface -->
+<section class="space-y-8">
+<div class="flex items-center gap-12 border-b border-outline-variant/10">
+<button class="pb-4 text-sm font-bold tracking-tight text-primary border-b-2 border-primary">Transcript</button>
+<button class="pb-4 text-sm font-medium tracking-tight text-on-surface-variant hover:text-on-background transition-colors">Clips</button>
+<button class="pb-4 text-sm font-medium tracking-tight text-on-surface-variant hover:text-on-background transition-colors">Settings</button>
+</div>
+<!-- Active Tab: Transcript (Using editorial spacing) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-16">
+<div class="lg:col-span-8 space-y-12">
+<!-- Dialogue Row -->
+<div class="group flex gap-8">
+<div class="w-16 pt-1">
+<span class="text-[11px] font-black text-primary-dim opacity-40 group-hover:opacity-100 transition-opacity tabular-nums">00:00:12</span>
+</div>
+<div class="flex-1 space-y-2">
+<span class="text-[10px] font-bold uppercase tracking-widest text-primary">Host</span>
+<p class="text-lg font-light text-on-background leading-relaxed">
+                                    "Welcome back everyone. Today we're exploring the intersection of generative models and nonlinear editing. We've seen how Midjourney changed images, but video is the next frontier."
+                                </p>
+</div>
+</div>
+<!-- Dialogue Row -->
+<div class="group flex gap-8">
+<div class="w-16 pt-1">
+<span class="text-[11px] font-black text-primary-dim opacity-40 group-hover:opacity-100 transition-opacity tabular-nums">00:00:45</span>
+</div>
+<div class="flex-1 space-y-2">
+<span class="text-[10px] font-bold uppercase tracking-widest text-tertiary">Guest</span>
+<p class="text-lg font-light text-on-background leading-relaxed">
+                                    "Exactly. The bottleneck has always been the render time and the manual selection of keyframes. What we're seeing now with Recast is the ability to semantically search your footage."
+                                </p>
+</div>
+</div>
+<!-- Dialogue Row -->
+<div class="group flex gap-8">
+<div class="w-16 pt-1">
+<span class="text-[11px] font-black text-primary-dim opacity-40 group-hover:opacity-100 transition-opacity tabular-nums">00:01:22</span>
+</div>
+<div class="flex-1 space-y-2">
+<span class="text-[10px] font-bold uppercase tracking-widest text-primary">Host</span>
+<p class="text-lg font-light text-on-background leading-relaxed">
+                                    "How does that impact the role of a traditional editor? Are we looking at a future where the AI suggests the cuts and the human just polishes the emotion?"
+                                </p>
+</div>
+</div>
+</div>
+<!-- Side Panel: Stats/Metadata -->
+<div class="lg:col-span-4 space-y-8">
+<div class="p-6 bg-surface-container-low rounded-xl border border-outline-variant/10">
+<h3 class="font-headline text-lg font-bold mb-4">Episode Analysis</h3>
+<div class="space-y-4">
+<div class="flex justify-between items-center text-sm">
+<span class="text-on-surface-variant">Keywords detected</span>
+<span class="font-bold text-on-background">24</span>
+</div>
+<div class="flex justify-between items-center text-sm">
+<span class="text-on-surface-variant">Speaker distribution</span>
+<span class="font-bold text-on-background">52% / 48%</span>
+</div>
+<div class="flex justify-between items-center text-sm">
+<span class="text-on-surface-variant">Confidence score</span>
+<span class="font-bold text-secondary">98.2%</span>
+</div>
+</div>
+</div>
+<!-- Suggested Clips Preview -->
+<div class="space-y-4">
+<h3 class="text-xs font-bold uppercase tracking-widest text-on-surface-variant px-1">Top Clip Suggestions</h3>
+<div class="space-y-3">
+<div class="p-4 bg-surface-container-high hover:bg-surface-bright transition-colors rounded-xl border border-outline-variant/10 flex gap-4 cursor-pointer">
+<div class="w-20 aspect-video rounded-lg bg-surface-container-lowest overflow-hidden flex-shrink-0">
+<img alt="Clip" class="w-full h-full object-cover" data-alt="Cinematic close-up of a video editing timeline" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA6u_90uNRoPePavLXiQ0t0mwXBOYVcrXhyJuJ2Lz162IHT4VxMIvLIiO0JwD9MdIHErARvzA6hS64UYxYMSup202y5Zwh1od8voylLKhjhEfR_NJGPSwBlm4VfmTamEhPQuZhMs3ub3kHVS4rXSYrK45-Z5uOCK92JTdNejUXLVdVe65MmFlfm-5YU70fyWg_SzLrfIu_RnjUp-QP1d3CRYCVRjLnqtPOQtLfr9KQppbvJ3NspUiKTfamoO7uR7ViwU6Kxu8bWWRig"/>
+</div>
+<div class="flex flex-col justify-center">
+<span class="text-sm font-bold text-on-background">AI vs. Humans</span>
+<span class="text-[10px] text-on-surface-variant">02:45 duration</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Hidden Content for other tabs (Structural representation) -->
+<!-- Clips Tab would be a grid: md:grid-cols-2 lg:grid-cols-3 gap-8 -->
+<!-- Settings Tab would be a flex-col max-w-lg gap-6 -->
+</section>
+</div>
+<!-- Floating Transport (Video Navigation) -->
+<div class="fixed bottom-8 left-1/2 -translate-x-1/2 w-full max-w-2xl px-6 z-50">
+<div class="glass-panel border border-outline-variant/20 rounded-2xl p-4 shadow-2xl flex items-center justify-between">
+<div class="flex items-center gap-4">
+<button class="h-10 w-10 flex items-center justify-center text-on-surface-variant hover:text-on-background transition-colors">
+<span class="material-symbols-outlined">replay_10</span>
+</button>
+<button class="h-12 w-12 bg-primary rounded-full flex items-center justify-center text-on-primary-fixed shadow-lg shadow-primary/30">
+<span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">pause</span>
+</button>
+<button class="h-10 w-10 flex items-center justify-center text-on-surface-variant hover:text-on-background transition-colors">
+<span class="material-symbols-outlined">forward_30</span>
+</button>
+</div>
+<div class="flex-1 px-8 hidden sm:block">
+<div class="text-[10px] font-bold text-center mb-1 text-on-surface-variant uppercase tracking-widest">Currently Playing</div>
+<div class="text-sm font-bold text-center text-on-background truncate px-4">The Future of AI in Video Editing</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="h-10 w-10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">auto_fix_high</span>
+</button>
+<button class="h-10 w-10 flex items-center justify-center text-on-surface-variant hover:text-on-background">
+<span class="material-symbols-outlined">expand_less</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+</body></html>
