@@ -3,6 +3,7 @@ import {
   text,
   timestamp,
   integer,
+  bigint,
   pgEnum,
 } from "drizzle-orm/pg-core";
 
@@ -44,4 +45,17 @@ export const clips = pgTable("clips", {
   confidence: integer("confidence"), // 0-100
   exported: integer("exported").default(0), // export count
   createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+// Monthly usage tracking for free tier guardrails
+export const usageLog = pgTable("usage_log", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  month: text("month").notNull(), // "2026-03"
+  deepgramMinutes: integer("deepgram_minutes").notNull().default(0),
+  inngestRuns: integer("inngest_runs").notNull().default(0),
+  r2StorageBytes: bigint("r2_storage_bytes", { mode: "number" }).notNull().default(0),
+  r2Writes: integer("r2_writes").notNull().default(0),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });

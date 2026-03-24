@@ -4,6 +4,7 @@ import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { r2, R2_BUCKET } from "@/lib/r2";
 import { db } from "@/db";
 import { episodes } from "@/db/schema";
+import { checkR2Usage } from "@/lib/usage-guard";
 
 export async function POST(req: Request) {
   const { userId } = await auth();
@@ -11,12 +12,25 @@ export async function POST(req: Request) {
     return Response.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const { filename, contentType, title } = await req.json();
+  const { filename, contentType, title, fileSize } = await req.json();
 
   if (!filename || !contentType) {
     return Response.json(
       { error: "filename and contentType are required" },
       { status: 400 }
+    );
+  }
+
+  // Check R2 free tier limits
+  const r2Check = await checkR2Usage(fileSize || 0);
+  if (!r2Check.allowed) {
+    return Response.json(
+      {
+        error: "free_tier_limit",
+        message: `Cloudflare R2 free tier limit approaching. Current storage: ${(r2Check.current / 1024 / 1024 / 1024).toFixed(2)}GB of ${(r2Check.limit / 1024 / 1024 / 1024).toFixed(0)}GB. Please approve this upload or upgrade your plan.`,
+        requiresApproval: true,
+      },
+      { status: 429 }
     );
   }
 
