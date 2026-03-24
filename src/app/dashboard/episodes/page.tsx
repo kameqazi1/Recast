@@ -32,7 +32,7 @@ export default async function EpisodesPage() {
           <input
             type="text"
             placeholder="Search episodes..."
-            className="w-full bg-black border-none rounded-lg py-2.5 pl-10 pr-4 text-sm text-text placeholder:text-text-muted/60 focus:outline-none focus:ring-1 focus:ring-primary/50"
+            className="w-full bg-black border-none rounded-lg py-2.5 pl-10 pr-4 text-sm text-text placeholder:text-text-muted focus:outline-none focus:ring-1 focus:ring-primary/50"
           />
         </div>
       </section>
@@ -89,7 +89,7 @@ export default async function EpisodesPage() {
       ) : (
         <div className="bg-surface-low rounded-xl p-16 text-center">
           <p className="text-text-muted text-lg mb-2">No episodes yet</p>
-          <p className="text-text-muted/60 text-sm">Upload your first episode from the dashboard</p>
+          <p className="text-text-muted text-sm">Upload your first episode from the dashboard</p>
         </div>
       )}
     </>

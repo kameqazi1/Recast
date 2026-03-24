@@ -59,6 +59,15 @@
 - **Glow:** `box-shadow: 0 0 40px 8px rgba(245, 158, 11, 0.08)` — ambient glow for elevated elements
 - **Dark mode:** This IS the dark mode. Light mode is not planned for v1.
 
+### CRITICAL: Text Visibility Rule
+**All text must be white (#F6F3F5) by default.** This is a dark-mode-only app on a near-black background. Any text that is not explicitly a secondary/muted element MUST use #F6F3F5 (text) for maximum visibility. This includes:
+- All headings, labels, body text, input text, button text on dark backgrounds
+- Placeholder text in inputs: use #ACAAAD minimum (never darker)
+- Third-party component text (Clerk, etc): force override to #F6F3F5 with !important if needed
+- Social login buttons, form labels, footer text, divider text: all #F6F3F5
+- Only use #ACAAAD (text-muted) for intentionally de-emphasized secondary info
+- **Never leave text at a third-party default color** — dark-on-dark is invisible and unacceptable
+
 ## Spacing
 - **Base unit:** 4px
 - **Density:** Comfortable — generous whitespace, editorial breathing room

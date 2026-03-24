@@ -80,7 +80,7 @@ export default async function ClipsPage() {
       ) : (
         <div className="bg-surface-low rounded-xl p-16 text-center">
           <p className="text-text-muted text-lg mb-2">No clips yet</p>
-          <p className="text-text-muted/60 text-sm">
+          <p className="text-text-muted text-sm">
             Clips are auto-detected when episodes finish processing
           </p>
         </div>

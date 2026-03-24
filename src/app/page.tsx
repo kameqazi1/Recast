@@ -93,7 +93,7 @@ export default function LandingPage() {
             <p className="text-center text-[10px] uppercase tracking-[0.2em] text-text-muted font-bold mb-8">
               Trusted by top creators
             </p>
-            <div className="flex flex-wrap justify-center items-center gap-12 md:gap-24 opacity-30">
+            <div className="flex flex-wrap justify-center items-center gap-12 md:gap-24 opacity-60">
               {["Creator Studio", "PodFlow", "AudioLab", "ClipMaster", "VoxMedia"].map(
                 (name) => (
                   <div

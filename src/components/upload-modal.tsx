@@ -118,7 +118,7 @@ export function UploadModal({
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="My Podcast Episode"
-            className="w-full bg-black border-none rounded-lg py-3 px-4 text-sm text-text placeholder:text-text-muted/60 focus:outline-none focus:ring-1 focus:ring-primary/50"
+            className="w-full bg-black border-none rounded-lg py-3 px-4 text-sm text-text placeholder:text-text-muted focus:outline-none focus:ring-1 focus:ring-primary/50"
           />
         </div>
 
@@ -150,7 +150,7 @@ export function UploadModal({
               <p className="text-sm text-text-muted">
                 Click to select audio or video file
               </p>
-              <p className="text-xs text-text-muted/60 mt-1">
+              <p className="text-xs text-text-muted mt-1">
                 MP3, MP4, WAV, M4A, MOV up to 2GB
               </p>
             </>

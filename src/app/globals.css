@@ -40,6 +40,41 @@
   body {
     @apply bg-background text-text font-body antialiased;
   }
+
+  /* Force all Clerk component text to white for dark mode visibility */
+  .cl-rootBox,
+  .cl-card,
+  .cl-headerTitle,
+  .cl-headerSubtitle,
+  .cl-formFieldLabel,
+  .cl-formFieldInput,
+  .cl-footerActionText,
+  .cl-footerAction,
+  .cl-dividerText,
+  .cl-socialButtonsBlockButtonText,
+  .cl-identityPreviewText,
+  .cl-formFieldInputShowPasswordButton,
+  .cl-userButtonPopoverActionButton,
+  .cl-userButtonPopoverActionButtonText,
+  .cl-userPreviewMainIdentifier,
+  .cl-userPreviewSecondaryIdentifier,
+  .cl-profileSectionTitle,
+  .cl-profileSectionContent,
+  .cl-menuItem,
+  .cl-menuItemText,
+  .cl-breadcrumbsItem,
+  .cl-navbarButton,
+  .cl-badge {
+    color: #F6F3F5 !important;
+  }
+
+  .cl-socialButtonsProviderIcon {
+    filter: brightness(0) invert(1) !important;
+  }
+
+  .cl-socialButtonsBlockButton {
+    border-color: rgba(245, 158, 11, 0.4) !important;
+  }
 }
 
 @layer utilities {

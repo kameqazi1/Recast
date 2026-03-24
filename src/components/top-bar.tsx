@@ -12,7 +12,7 @@ export function TopBar() {
           <input
             type="text"
             placeholder="Search episodes or clips..."
-            className="w-full bg-black border-none rounded-full py-2 pl-10 pr-4 text-xs text-text placeholder:text-text-muted/60 focus:outline-none focus:ring-1 focus:ring-primary/50"
+            className="w-full bg-black border-none rounded-full py-2 pl-10 pr-4 text-xs text-text placeholder:text-text-muted focus:outline-none focus:ring-1 focus:ring-primary/50"
           />
         </div>
       </div>

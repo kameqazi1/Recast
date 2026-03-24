@@ -169,7 +169,7 @@ export default async function EpisodeDetailPage({
               transcriptLines.map((line, i) => (
                 <div key={i} className="group flex gap-8">
                   <div className="w-16 pt-1">
-                    <span className="text-[11px] font-bold font-mono text-primary-dim opacity-40 group-hover:opacity-100 transition-opacity tabular-nums">
+                    <span className="text-[11px] font-bold font-mono text-text-muted opacity-70 group-hover:opacity-100 transition-opacity tabular-nums">
                       {formatTime(Math.round((i / transcriptLines.length) * duration))}
                     </span>
                   </div>
