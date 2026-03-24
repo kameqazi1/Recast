@@ -1,8 +1,14 @@
+"use client";
+
+import { useState } from "react";
 import { Film, Scissors, Clock, Share2, PlusCircle } from "lucide-react";
 import { StatCard } from "@/components/stat-card";
 import { EpisodeTable } from "@/components/episode-table";
+import { UploadModal } from "@/components/upload-modal";
 
 export default function DashboardPage() {
+  const [uploadOpen, setUploadOpen] = useState(false);
+
   return (
     <>
       {/* Welcome Header */}
@@ -20,7 +26,10 @@ export default function DashboardPage() {
           </h2>
         </div>
         <div>
-          <button className="gradient-primary text-background font-bold py-4 px-8 rounded-xl flex items-center gap-3 shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all">
+          <button
+            onClick={() => setUploadOpen(true)}
+            className="gradient-primary text-background font-bold py-4 px-8 rounded-xl flex items-center gap-3 shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all"
+          >
             <PlusCircle size={18} />
             <span>Upload Episode</span>
           </button>
@@ -58,6 +67,9 @@ export default function DashboardPage() {
 
       {/* Episodes Table */}
       <EpisodeTable />
+
+      {/* Upload Modal */}
+      <UploadModal open={uploadOpen} onClose={() => setUploadOpen(false)} />
     </>
   );
 }
