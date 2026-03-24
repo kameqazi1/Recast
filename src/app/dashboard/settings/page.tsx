@@ -18,14 +18,6 @@ export default async function SettingsPage() {
       <div className="bg-surface-low rounded-xl p-8 border border-outline/10">
         <UserProfile
           appearance={{
-            variables: {
-              colorText: "#F6F3F5",
-              colorTextSecondary: "#F6F3F5",
-              colorPrimary: "#F59E0B",
-              colorBackground: "transparent",
-              colorInputBackground: "#000000",
-              colorInputText: "#F6F3F5",
-            },
             elements: {
               rootBox: "w-full",
               cardBox: "shadow-none bg-transparent",
