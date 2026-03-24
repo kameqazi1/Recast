@@ -11,6 +11,7 @@ import {
   checkInngestUsage,
   incrementUsage,
 } from "@/lib/usage-guard";
+import { notifyAdmin } from "@/lib/notify";
 
 export const processEpisode = inngest.createFunction(
   {
@@ -25,6 +26,15 @@ export const processEpisode = inngest.createFunction(
     await step.run("check-usage", async () => {
       const inngestCheck = await checkInngestUsage();
       if (!inngestCheck.allowed) {
+        await notifyAdmin({
+          subject: "Inngest Run Limit — Processing Blocked",
+          message: `Episode processing was blocked because Inngest is near the free tier limit.`,
+          details: {
+            "Episode ID": episodeId,
+            "Current runs": `${inngestCheck.current}`,
+            "Limit": `${inngestCheck.limit}`,
+          },
+        });
         throw new Error(
           `FREE_TIER_LIMIT: Inngest at ${inngestCheck.current}/${inngestCheck.limit} runs this month`
         );
@@ -46,11 +56,19 @@ export const processEpisode = inngest.createFunction(
       // Estimate duration (will be refined after transcription)
       const deepgramCheck = await checkDeepgramUsage(5); // assume 5 min minimum
       if (!deepgramCheck.allowed) {
-        // Mark episode as needing approval instead of failing
         await db
           .update(episodes)
           .set({ status: "failed", updatedAt: new Date() })
           .where(eq(episodes.id, episodeId));
+        await notifyAdmin({
+          subject: "Deepgram Minute Limit — Transcription Blocked",
+          message: `Transcription for episode was blocked because Deepgram is near the free tier limit.`,
+          details: {
+            "Episode ID": episodeId,
+            "Current minutes": `${deepgramCheck.current}`,
+            "Limit": `${deepgramCheck.limit}`,
+          },
+        });
         throw new Error(
           `FREE_TIER_LIMIT: Deepgram at ${deepgramCheck.current}/${deepgramCheck.limit} minutes this month`
         );

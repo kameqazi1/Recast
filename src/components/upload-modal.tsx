@@ -14,7 +14,7 @@ export function UploadModal({
   const [title, setTitle] = useState("");
   const [uploading, setUploading] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [warning, setWarning] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
 
   if (!open) return null;
@@ -23,9 +23,10 @@ export function UploadModal({
     if (!file) return;
     setUploading(true);
     setProgress(0);
+    setError(null);
 
     try {
-      // 1. Get presigned URL (includes R2 free tier check)
+      // 1. Get presigned URL
       const res = await fetch("/api/upload", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -37,8 +38,8 @@ export function UploadModal({
         }),
       });
       const uploadData = await res.json();
-      if (uploadData.error === "free_tier_limit") {
-        setWarning(uploadData.message);
+      if (uploadData.error) {
+        setError(uploadData.error);
         setUploading(false);
         return;
       }
@@ -63,8 +64,8 @@ export function UploadModal({
         xhr.send(file);
       });
 
-      // 3. Confirm upload (includes Inngest/Deepgram free tier check)
-      const confirmRes = await fetch("/api/upload/confirm", {
+      // 3. Confirm upload
+      await fetch("/api/upload/confirm", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -73,18 +74,12 @@ export function UploadModal({
           fileSize: file.size,
         }),
       });
-      const confirmData = await confirmRes.json();
-      if (confirmData.warning?.requiresApproval) {
-        setWarning(confirmData.warning.message);
-      }
 
       setUploading(false);
       setFile(null);
       setTitle("");
       setProgress(0);
-      if (!confirmData.warning?.requiresApproval) {
-        onClose();
-      }
+      onClose();
       window.location.reload();
     } catch (err) {
       console.error("Upload error:", err);
@@ -162,13 +157,10 @@ export function UploadModal({
           )}
         </div>
 
-        {/* Free tier warning */}
-        {warning && (
-          <div className="mb-6 p-4 bg-warning/10 border border-warning/20 rounded-xl">
-            <p className="text-sm text-warning font-medium">{warning}</p>
-            <p className="text-xs text-text-muted mt-2">
-              Upload saved but processing paused. Upgrade your plan or wait for the next billing cycle.
-            </p>
+        {/* Error message */}
+        {error && (
+          <div className="mb-6 p-4 bg-error/10 border border-error/20 rounded-xl">
+            <p className="text-sm text-error font-medium">{error}</p>
           </div>
         )}
 

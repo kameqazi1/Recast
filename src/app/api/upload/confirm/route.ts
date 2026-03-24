@@ -8,6 +8,7 @@ import {
   checkDeepgramUsage,
 } from "@/lib/usage-guard";
 import { inngest } from "@/lib/inngest";
+import { notifyAdmin } from "@/lib/notify";
 
 export async function POST(req: Request) {
   const { userId } = await auth();
@@ -31,34 +32,40 @@ export async function POST(req: Request) {
 
   // Check if we can run the processing pipeline
   const inngestCheck = await checkInngestUsage();
-  // Estimate ~1 minute per MB as rough audio duration guess
   const estimatedMinutes = Math.max(1, Math.ceil((fileSize || 0) / 1024 / 1024));
   const deepgramCheck = await checkDeepgramUsage(estimatedMinutes);
 
   if (!inngestCheck.allowed || !deepgramCheck.allowed) {
-    // Save episode but don't start processing — needs approval
+    // Save episode but don't start processing — email admin
     const [updated] = await db
       .update(episodes)
       .set({
         fileUrl: key,
         fileSize: fileSize || null,
-        status: "uploading", // stays in uploading, not processing
+        status: "uploading",
         updatedAt: new Date(),
       })
       .where(and(eq(episodes.id, episodeId), eq(episodes.userId, userId)))
       .returning();
 
-    const blockedService = !inngestCheck.allowed ? "Inngest" : "Deepgram";
-    const check = !inngestCheck.allowed ? inngestCheck : deepgramCheck;
+    const blockedService = !inngestCheck.allowed ? inngestCheck : deepgramCheck;
+
+    await notifyAdmin({
+      subject: `${blockedService.service} Limit — Processing Paused`,
+      message: `Episode "${updated?.title}" was uploaded but processing is paused because ${blockedService.service} is near the free tier limit.`,
+      details: {
+        "Episode": updated?.title || episodeId,
+        "Episode ID": episodeId,
+        "Service": blockedService.service,
+        "Current usage": `${blockedService.current} ${blockedService.unit}`,
+        "Free tier limit": `${blockedService.limit} ${blockedService.unit}`,
+        "User ID": userId,
+      },
+    });
 
     return Response.json({
       episode: updated,
-      warning: {
-        type: "free_tier_limit",
-        service: blockedService,
-        message: `${blockedService} free tier limit approaching (${check.current}/${check.limit} ${check.unit}). Processing paused — approve to continue.`,
-        requiresApproval: true,
-      },
+      message: "Upload complete. Processing will begin shortly.",
     });
   }
 

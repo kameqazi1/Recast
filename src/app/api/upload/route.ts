@@ -5,6 +5,7 @@ import { r2, R2_BUCKET } from "@/lib/r2";
 import { db } from "@/db";
 import { episodes } from "@/db/schema";
 import { checkR2Usage } from "@/lib/usage-guard";
+import { notifyAdmin } from "@/lib/notify";
 
 export async function POST(req: Request) {
   const { userId } = await auth();
@@ -21,16 +22,24 @@ export async function POST(req: Request) {
     );
   }
 
-  // Check R2 free tier limits
+  // Check R2 free tier limits — notify admin, block upload
   const r2Check = await checkR2Usage(fileSize || 0);
   if (!r2Check.allowed) {
-    return Response.json(
-      {
-        error: "free_tier_limit",
-        message: `Cloudflare R2 free tier limit approaching. Current storage: ${(r2Check.current / 1024 / 1024 / 1024).toFixed(2)}GB of ${(r2Check.limit / 1024 / 1024 / 1024).toFixed(0)}GB. Please approve this upload or upgrade your plan.`,
-        requiresApproval: true,
+    await notifyAdmin({
+      subject: "R2 Storage Limit — Upload Blocked",
+      message: `A user tried to upload "${filename}" but R2 storage is near the free tier limit. The upload was blocked.`,
+      details: {
+        "File": filename,
+        "File size": `${((fileSize || 0) / 1024 / 1024).toFixed(1)} MB`,
+        "Current storage": `${(r2Check.current / 1024 / 1024 / 1024).toFixed(2)} GB`,
+        "Free tier limit": `${(r2Check.limit / 1024 / 1024 / 1024).toFixed(0)} GB`,
+        "User ID": userId,
       },
-      { status: 429 }
+    });
+
+    return Response.json(
+      { error: "Upload temporarily unavailable. The admin has been notified." },
+      { status: 503 }
     );
   }
 
