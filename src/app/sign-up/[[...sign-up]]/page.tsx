@@ -24,13 +24,9 @@ export default function SignUpPage() {
           forceRedirectUrl="/dashboard"
           appearance={{
             variables: {
-              colorText: "#F6F3F5",
-              colorTextSecondary: "#ACAAAD",
               colorPrimary: "#F59E0B",
               colorBackground: "transparent",
-              colorInputBackground: "#000000",
-              colorInputText: "#F6F3F5",
-            },
+            } as Record<string, string>,
             elements: {
               rootBox: "w-full",
               cardBox: "shadow-none bg-transparent",
@@ -74,13 +70,6 @@ export default function SignUpPage() {
         />
       </div>
 
-      {/* Footer */}
-      <p className="mt-8 text-sm text-[#F6F3F5]">
-        Already have an account?{" "}
-        <Link href="/sign-in" className="text-primary font-bold hover:underline">
-          Sign in
-        </Link>
-      </p>
     </div>
   );
 }
