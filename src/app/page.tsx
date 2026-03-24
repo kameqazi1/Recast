@@ -32,7 +32,7 @@ export default function LandingPage() {
               Pricing
             </a>
             <Link
-              href="/dashboard"
+              href="/sign-in"
               className="text-text-muted hover:text-text transition-colors"
             >
               Login

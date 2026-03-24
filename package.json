@@ -9,6 +9,8 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@clerk/nextjs": "^7.0.6",
+    "@clerk/themes": "^2.4.57",
     "@fontsource-variable/dm-sans": "^5.2.8",
     "@fontsource/dm-mono": "^5.2.7",
     "lucide-react": "^1.6.0",

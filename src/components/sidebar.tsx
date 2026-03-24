@@ -8,9 +8,8 @@ import {
   Film,
   BarChart3,
   Settings,
-  User,
-  LogOut,
 } from "lucide-react";
+import { UserButton } from "@clerk/nextjs";
 
 const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -64,21 +63,14 @@ export function Sidebar() {
       </nav>
 
       {/* Bottom */}
-      <div className="pt-8 border-t border-outline/10 space-y-1">
-        <Link
-          href="#"
-          className="flex items-center gap-3 px-4 py-3 text-text-muted hover:text-text hover:bg-surface-high rounded-lg text-sm transition-colors"
-        >
-          <User size={18} />
-          <span>Profile</span>
-        </Link>
-        <Link
-          href="#"
-          className="flex items-center gap-3 px-4 py-3 text-text-muted hover:text-text hover:bg-surface-high rounded-lg text-sm transition-colors"
-        >
-          <LogOut size={18} />
-          <span>Logout</span>
-        </Link>
+      <div className="pt-8 border-t border-outline/10 px-4">
+        <UserButton
+          appearance={{
+            elements: {
+              avatarBox: "w-8 h-8",
+            },
+          }}
+        />
       </div>
     </aside>
   );
