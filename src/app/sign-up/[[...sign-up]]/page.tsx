@@ -19,28 +19,45 @@ export default function SignUpPage() {
       </Link>
 
       {/* Clerk card wrapper */}
-      <div className="bg-surface-low border border-outline/20 rounded-2xl p-8 shadow-2xl">
+      <div className="bg-surface-low border border-primary/40 rounded-2xl p-8 shadow-2xl glow-primary">
         <SignUp
           appearance={{
+            variables: {
+              colorText: "#F6F3F5",
+              colorTextSecondary: "#ACAAAD",
+              colorPrimary: "#F59E0B",
+              colorBackground: "transparent",
+              colorInputBackground: "#000000",
+              colorInputText: "#F6F3F5",
+            },
             elements: {
               rootBox: "w-full",
               cardBox: "shadow-none bg-transparent",
               card: "bg-transparent shadow-none",
-              headerTitle: "text-text font-display font-bold",
-              headerSubtitle: "text-text-muted",
+              headerTitle: "!text-[#F6F3F5] font-display font-bold",
+              headerSubtitle: "!text-[#ACAAAD]",
               socialButtonsBlockButton:
-                "bg-surface-high border-outline/20 text-text hover:bg-surface-bright",
-              formFieldLabel: "text-text-muted",
+                "!bg-[#1F1F22] !border-[#48474A]/30 !text-[#F6F3F5] hover:!bg-[#2C2C2F]",
+              socialButtonsBlockButtonText: "!text-[#F6F3F5]",
+              formFieldLabel: "!text-[#ACAAAD]",
               formFieldInput:
-                "bg-black border-outline/20 text-text focus:ring-primary/50",
+                "!bg-black !border-[#48474A]/30 !text-[#F6F3F5] focus:!ring-[#F59E0B]/50",
               formButtonPrimary:
-                "bg-gradient-to-r from-primary to-primary-dim hover:opacity-90 text-background font-bold",
-              footerActionLink: "text-primary hover:text-primary-light",
-              dividerLine: "bg-outline/20",
-              dividerText: "text-text-muted",
-              identityPreviewEditButton: "text-primary",
-              formFieldAction: "text-primary",
-              alertText: "text-error",
+                "!bg-gradient-to-r !from-[#F59E0B] !to-[#D97706] hover:!opacity-90 !text-[#0E0E10] !font-bold",
+              footerActionLink: "!text-[#F59E0B]",
+              dividerLine: "!bg-[#48474A]/30",
+              dividerText: "!text-[#ACAAAD]",
+              identityPreviewText: "!text-[#F6F3F5]",
+              identityPreviewEditButton: "!text-[#F59E0B]",
+              formFieldAction: "!text-[#F59E0B]",
+              formFieldInputShowPasswordButton: "!text-[#ACAAAD]",
+              alertText: "!text-[#FF6E84]",
+              formHeaderTitle: "!text-[#F6F3F5]",
+              formHeaderSubtitle: "!text-[#ACAAAD]",
+              otpCodeFieldInput: "!text-[#F6F3F5] !border-[#48474A]/30",
+              selectButton: "!text-[#F6F3F5]",
+              selectOptionsContainer: "!bg-[#1F1F22]",
+              selectOption: "!text-[#F6F3F5]",
               footer: "hidden",
             },
           }}
