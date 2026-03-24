@@ -21,6 +21,7 @@ export default function SignInPage() {
       {/* Clerk card wrapper */}
       <div className="bg-surface-low border border-primary/40 rounded-2xl p-8 shadow-2xl glow-primary">
         <SignIn
+          forceRedirectUrl="/dashboard"
           appearance={{
             variables: {
               colorText: "#F6F3F5",

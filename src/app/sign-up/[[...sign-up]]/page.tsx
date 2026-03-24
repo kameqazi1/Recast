@@ -21,6 +21,7 @@ export default function SignUpPage() {
       {/* Clerk card wrapper */}
       <div className="bg-surface-low border border-primary/40 rounded-2xl p-8 shadow-2xl glow-primary">
         <SignUp
+          forceRedirectUrl="/dashboard"
           appearance={{
             variables: {
               colorText: "#F6F3F5",
