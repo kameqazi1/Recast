@@ -25,12 +25,9 @@ export default function LandingPage() {
             >
               Features
             </a>
-            <a
-              href="#"
-              className="text-text-muted hover:text-text transition-colors"
-            >
+            <span className="text-text-muted/50 cursor-default">
               Pricing
-            </a>
+            </span>
             <Link
               href="/sign-in"
               className="text-text-muted hover:text-text transition-colors"
@@ -75,9 +72,12 @@ export default function LandingPage() {
               >
                 Get Started Free
               </Link>
-              <button className="bg-surface-highest border border-outline/15 text-primary px-10 py-4 rounded-full font-bold text-lg hover:bg-surface-bright transition-all">
-                Watch Demo
-              </button>
+              <Link
+                href="/sign-in"
+                className="bg-surface-highest border border-outline/15 text-primary px-10 py-4 rounded-full font-bold text-lg hover:bg-surface-bright transition-all"
+              >
+                See It In Action
+              </Link>
             </div>
           </div>
           {/* Background Glow */}
@@ -245,17 +245,9 @@ export default function LandingPage() {
             </p>
           </div>
           <div className="flex flex-wrap justify-center gap-8">
-            {["Features", "Pricing", "Privacy Policy", "Terms of Service", "Support"].map(
-              (link) => (
-                <a
-                  key={link}
-                  href="#"
-                  className="text-sm text-text-muted hover:text-primary transition-colors"
-                >
-                  {link}
-                </a>
-              )
-            )}
+            <a href="#features" className="text-sm text-text-muted hover:text-primary transition-colors">Features</a>
+            <Link href="/sign-in" className="text-sm text-text-muted hover:text-primary transition-colors">Sign In</Link>
+            <a href="mailto:saeedqazi2003@gmail.com" className="text-sm text-text-muted hover:text-primary transition-colors">Support</a>
           </div>
         </div>
       </footer>
