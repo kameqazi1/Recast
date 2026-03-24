@@ -20,7 +20,7 @@ export default async function SettingsPage() {
           appearance={{
             variables: {
               colorText: "#F6F3F5",
-              colorTextSecondary: "#ACAAAD",
+              colorTextSecondary: "#F6F3F5",
               colorPrimary: "#F59E0B",
               colorBackground: "transparent",
               colorInputBackground: "#000000",
@@ -38,7 +38,7 @@ export default async function SettingsPage() {
               formFieldLabel: "!text-[#F6F3F5]",
               formFieldInput: "!bg-black !border-[#48474A]/30 !text-[#F6F3F5]",
               formButtonPrimary:
-                "!bg-gradient-to-r !from-[#F59E0B] !to-[#D97706] !text-[#0E0E10] !font-bold",
+                "!bg-gradient-to-r !from-[#F6F3F5] !to-[#F6F3F5] !text-[#F6F3F5] !font-bold",
               profileSectionTitle: "!text-[#F6F3F5]",
               profileSectionContent: "!text-[#F6F3F5]",
               profileSectionPrimaryButton: "!text-[#F6F3F5]",

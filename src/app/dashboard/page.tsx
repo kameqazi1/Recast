@@ -1,4 +1,4 @@
-import { auth } from "@clerk/nextjs/server";
+import { auth, currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { getDashboardStats, getRecentEpisodes } from "@/lib/queries";
 import { DashboardClient } from "./dashboard-client";
@@ -7,13 +7,17 @@ export default async function DashboardPage() {
   const { userId } = await auth();
   if (!userId) redirect("/sign-in");
 
-  const [stats, recentEpisodes] = await Promise.all([
+  const [stats, recentEpisodes, user] = await Promise.all([
     getDashboardStats(userId),
     getRecentEpisodes(userId),
+    currentUser(),
   ]);
+
+  const firstName = user?.firstName || "there";
 
   return (
     <DashboardClient
+      firstName={firstName}
       stats={stats}
       episodes={recentEpisodes.map((ep) => ({
         id: ep.id,

@@ -7,6 +7,7 @@ import { EpisodeTableLive } from "@/components/episode-table-live";
 import { UploadModal } from "@/components/upload-modal";
 
 interface DashboardClientProps {
+  firstName: string;
   stats: {
     totalEpisodes: number;
     clipsGenerated: number;
@@ -22,7 +23,7 @@ interface DashboardClientProps {
   }>;
 }
 
-export function DashboardClient({ stats, episodes }: DashboardClientProps) {
+export function DashboardClient({ firstName, stats, episodes }: DashboardClientProps) {
   const [uploadOpen, setUploadOpen] = useState(false);
 
   return (
@@ -34,8 +35,7 @@ export function DashboardClient({ stats, episodes }: DashboardClientProps) {
             Workspace Overview
           </span>
           <h2 className="font-display text-5xl font-black tracking-tighter text-text leading-tight">
-            Your episodes,{" "}
-            <span className="text-primary">amplified</span>.
+            Welcome back, <span className="text-primary">{firstName}</span>.
           </h2>
         </div>
         <div>
