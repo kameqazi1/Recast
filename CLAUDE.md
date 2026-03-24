@@ -2,7 +2,7 @@
 
 ## Deploy Configuration (configured by /setup-deploy)
 - Platform: Render
-- Production URL: TODO (update when domain is configured)
+- Production URL: https://recast-0efw.onrender.com
 - Deploy workflow: auto-deploy on push to main
 - Deploy status command: HTTP health check
 - Merge method: merge commit
@@ -13,7 +13,7 @@
 - Pre-merge: none
 - Deploy trigger: automatic on push to main (Render auto-deploy)
 - Deploy status: poll production URL until healthy
-- Health check: /api/health
+- Health check: https://recast-0efw.onrender.com/api/health
 
 ## Design System
 Always read DESIGN.md before making any visual or UI decisions.
