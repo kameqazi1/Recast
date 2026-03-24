@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
-import { dark } from "@clerk/themes";
+import { ui } from "@clerk/ui";
 import "@fontsource-variable/dm-sans";
 import "@fontsource/dm-mono";
 import "./globals.css";
@@ -18,17 +18,12 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider
+      ui={ui}
       appearance={{
-        baseTheme: dark,
         variables: {
           colorPrimary: "#F59E0B",
           colorBackground: "#0E0E10",
-          colorInputBackground: "#131315",
-          colorText: "#F6F3F5",
-          colorTextSecondary: "#ACAAAD",
-          borderRadius: "0.75rem",
-          fontFamily: "'DM Sans Variable', sans-serif",
-        },
+        } as Record<string, string>,
       }}
     >
       <html lang="en">
