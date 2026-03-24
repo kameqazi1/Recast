@@ -35,37 +35,46 @@ export default function SignUpPage() {
               cardBox: "shadow-none bg-transparent",
               card: "bg-transparent shadow-none",
               headerTitle: "!text-[#F6F3F5] font-display font-bold",
-              headerSubtitle: "!text-[#ACAAAD]",
+              headerSubtitle: "!text-[#F6F3F5]",
               socialButtonsBlockButton:
-                "!bg-[#1F1F22] !border-[#48474A]/30 !text-[#F6F3F5] hover:!bg-[#2C2C2F]",
+                "!bg-[#1F1F22] !border-[#F59E0B]/40 !text-[#F6F3F5] hover:!bg-[#2C2C2F]",
               socialButtonsBlockButtonText: "!text-[#F6F3F5]",
-              formFieldLabel: "!text-[#ACAAAD]",
+              socialButtonsProviderIcon:
+                "!brightness-0 !invert",
+              formFieldLabel: "!text-[#F6F3F5]",
               formFieldInput:
-                "!bg-black !border-[#48474A]/30 !text-[#F6F3F5] focus:!ring-[#F59E0B]/50",
+                "!bg-black !border-[#48474A]/30 !text-[#F6F3F5] !placeholder-[#ACAAAD] focus:!ring-[#F59E0B]/50",
+              formFieldInputPlaceholder: "!text-[#F6F3F5]",
               formButtonPrimary:
                 "!bg-gradient-to-r !from-[#F59E0B] !to-[#D97706] hover:!opacity-90 !text-[#0E0E10] !font-bold",
               footerActionLink: "!text-[#F59E0B]",
+              footerActionText: "!text-[#F6F3F5]",
+              footerAction: "!text-[#F6F3F5]",
               dividerLine: "!bg-[#48474A]/30",
-              dividerText: "!text-[#ACAAAD]",
+              dividerText: "!text-[#F6F3F5]",
               identityPreviewText: "!text-[#F6F3F5]",
               identityPreviewEditButton: "!text-[#F59E0B]",
               formFieldAction: "!text-[#F59E0B]",
-              formFieldInputShowPasswordButton: "!text-[#ACAAAD]",
+              formFieldInputShowPasswordButton: "!text-[#F6F3F5]",
               alertText: "!text-[#FF6E84]",
               formHeaderTitle: "!text-[#F6F3F5]",
-              formHeaderSubtitle: "!text-[#ACAAAD]",
+              formHeaderSubtitle: "!text-[#F6F3F5]",
               otpCodeFieldInput: "!text-[#F6F3F5] !border-[#48474A]/30",
               selectButton: "!text-[#F6F3F5]",
               selectOptionsContainer: "!bg-[#1F1F22]",
               selectOption: "!text-[#F6F3F5]",
-              footer: "hidden",
+              internal: "!text-[#F6F3F5]",
+              footer: "!text-[#F6F3F5] [&_*]:!text-[#F6F3F5]",
+              footerPages: "!text-[#F6F3F5]",
+              footerPagesLink: "!text-[#F6F3F5]",
+              badge: "!text-[#F6F3F5]",
             },
           }}
         />
       </div>
 
       {/* Footer */}
-      <p className="mt-8 text-sm text-text-muted">
+      <p className="mt-8 text-sm text-[#F6F3F5]">
         Already have an account?{" "}
         <Link href="/sign-in" className="text-primary font-bold hover:underline">
           Sign in
