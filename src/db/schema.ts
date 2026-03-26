@@ -4,12 +4,28 @@ import {
   timestamp,
   integer,
   bigint,
+  boolean,
   pgEnum,
+  index,
 } from "drizzle-orm/pg-core";
 
 export const episodeStatusEnum = pgEnum("episode_status", [
   "uploading",
   "processing",
+  "completed",
+  "failed",
+]);
+
+export const contentOutputFormatEnum = pgEnum("content_output_format", [
+  "blog_post",
+  "tweet_thread",
+  "show_notes",
+  "newsletter",
+]);
+
+export const contentOutputStatusEnum = pgEnum("content_output_status", [
+  "pending",
+  "generating",
   "completed",
   "failed",
 ]);
@@ -47,7 +63,62 @@ export const clips = pgTable("clips", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
-// Monthly usage tracking for free tier guardrails
+// Voice profiles for content generation tone matching
+export const voiceProfiles = pgTable("voice_profiles", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  userId: text("user_id").notNull(),
+  name: text("name").notNull(),
+  tone: text("tone"), // max 500 chars, freeform description
+  exampleOutput: text("example_output"), // max 2000 chars, few-shot example
+  avoidWords: text("avoid_words"), // max 500 chars, comma-separated
+  isDefault: boolean("is_default").notNull().default(false),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+// Generated content outputs per episode per format
+export const contentOutputs = pgTable(
+  "content_outputs",
+  {
+    id: text("id")
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    episodeId: text("episode_id")
+      .notNull()
+      .references(() => episodes.id, { onDelete: "cascade" }),
+    userId: text("user_id").notNull(),
+    format: contentOutputFormatEnum("format").notNull(),
+    content: text("content"),
+    wordCount: integer("word_count"),
+    voiceProfileId: text("voice_profile_id").references(
+      () => voiceProfiles.id,
+      { onDelete: "set null" }
+    ),
+    status: contentOutputStatusEnum("status").notNull().default("pending"),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+    updatedAt: timestamp("updated_at").defaultNow().notNull(),
+  },
+  (table) => [
+    index("content_outputs_episode_status_idx").on(
+      table.episodeId,
+      table.status
+    ),
+  ]
+);
+
+// Per-user LLM usage tracking (separate from global platform usage)
+export const userUsage = pgTable("user_usage", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  userId: text("user_id").notNull(),
+  month: text("month").notNull(), // "2026-03"
+  llmGenerations: integer("llm_generations").notNull().default(0),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+// Monthly usage tracking for free tier guardrails (global platform limits)
 export const usageLog = pgTable("usage_log", {
   id: text("id")
     .primaryKey()

@@ -1,6 +1,6 @@
 import { db } from "@/db";
-import { usageLog } from "@/db/schema";
-import { eq } from "drizzle-orm";
+import { usageLog, userUsage } from "@/db/schema";
+import { eq, and } from "drizzle-orm";
 
 // Free tier limits (with safety margin)
 const LIMITS = {
@@ -104,4 +104,47 @@ export async function incrementR2Storage(bytes: number) {
       updatedAt: new Date(),
     })
     .where(eq(usageLog.id, usage.id));
+}
+
+// --- Per-user LLM usage tracking ---
+
+const LLM_GENERATION_LIMIT = 40; // 40 format generations per month (~10 episodes)
+
+async function getOrCreateUserUsage(userId: string) {
+  const month = currentMonth();
+  const [existing] = await db
+    .select()
+    .from(userUsage)
+    .where(and(eq(userUsage.userId, userId), eq(userUsage.month, month)))
+    .limit(1);
+
+  if (existing) return existing;
+
+  const [created] = await db
+    .insert(userUsage)
+    .values({ userId, month })
+    .returning();
+  return created;
+}
+
+export async function checkLLMUsage(userId: string): Promise<UsageCheck> {
+  const usage = await getOrCreateUserUsage(userId);
+  return {
+    allowed: usage.llmGenerations + 1 <= LLM_GENERATION_LIMIT,
+    service: "LLM Content Generation",
+    current: usage.llmGenerations,
+    limit: LLM_GENERATION_LIMIT,
+    unit: "generations",
+  };
+}
+
+export async function incrementLLMUsage(userId: string, amount: number = 1) {
+  const usage = await getOrCreateUserUsage(userId);
+  await db
+    .update(userUsage)
+    .set({
+      llmGenerations: usage.llmGenerations + amount,
+      updatedAt: new Date(),
+    })
+    .where(eq(userUsage.id, usage.id));
 }
