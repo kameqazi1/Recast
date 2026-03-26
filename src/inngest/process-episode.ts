@@ -1,6 +1,6 @@
 import { inngest } from "@/lib/inngest";
 import { db } from "@/db";
-import { episodes, clips } from "@/db/schema";
+import { episodes, clips, contentOutputs } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { deepgram } from "@/lib/deepgram";
 import { GetObjectCommand } from "@aws-sdk/client-s3";
@@ -9,9 +9,52 @@ import { r2, R2_BUCKET } from "@/lib/r2";
 import {
   checkDeepgramUsage,
   checkInngestUsage,
+  checkLLMUsage,
   incrementUsage,
+  incrementLLMUsage,
 } from "@/lib/usage-guard";
 import { notifyAdmin } from "@/lib/notify";
+import { generateContent, type ContentFormat } from "@/lib/llm";
+import { getOrCreateDefaultProfile } from "@/lib/queries";
+
+// Processing pipeline:
+//
+//  episode/process event
+//       │
+//       ▼
+//  ┌─────────────┐    ┌─────────────┐    ┌──────────────┐
+//  │ check-usage  │───►│ get-signed  │───►│  transcribe  │
+//  │              │    │    -url     │    │  (10min max)  │
+//  └─────────────┘    └─────────────┘    └──────┬───────┘
+//                                               │
+//       ┌───────────────────────────────────────┘
+//       ▼
+//  ┌──────────────┐    ┌──────────────┐
+//  │ save-         │───►│ detect-clips │
+//  │ transcript   │    │  (5min max)  │
+//  └──────────────┘    └──────┬───────┘
+//                             │
+//       ┌─────────────────────┘
+//       ▼
+//  ┌──────────────┐    ┌────────────────────────────────┐
+//  │ save-clips   │───►│ generate-content (fan-out)     │
+//  └──────────────┘    │  ├── blog_post    (90s max)    │
+//                      │  ├── tweet_thread (60s max)    │
+//                      │  ├── show_notes   (60s max)    │
+//                      │  └── newsletter   (60s max)    │
+//                      └────────────┬───────────────────┘
+//                                   │
+//                                   ▼
+//                           ┌──────────────┐
+//                           │ mark-complete │
+//                           └──────────────┘
+
+const CONTENT_FORMATS: ContentFormat[] = [
+  "blog_post",
+  "tweet_thread",
+  "show_notes",
+  "newsletter",
+];
 
 export const processEpisode = inngest.createFunction(
   {
@@ -32,7 +75,7 @@ export const processEpisode = inngest.createFunction(
           details: {
             "Episode ID": episodeId,
             "Current runs": `${inngestCheck.current}`,
-            "Limit": `${inngestCheck.limit}`,
+            Limit: `${inngestCheck.limit}`,
           },
         });
         throw new Error(
@@ -51,52 +94,59 @@ export const processEpisode = inngest.createFunction(
       return getSignedUrl(r2, command, { expiresIn: 3600 });
     });
 
-    // Step 3: Transcribe with Deepgram
+    // Step 3: Transcribe with Deepgram (timeout: 10 minutes)
     const transcript = await step.run("transcribe", async () => {
-      // Estimate duration (will be refined after transcription)
-      const deepgramCheck = await checkDeepgramUsage(5); // assume 5 min minimum
-      if (!deepgramCheck.allowed) {
-        await db
-          .update(episodes)
-          .set({ status: "failed", updatedAt: new Date() })
-          .where(eq(episodes.id, episodeId));
-        await notifyAdmin({
-          subject: "Deepgram Minute Limit — Transcription Blocked",
-          message: `Transcription for episode was blocked because Deepgram is near the free tier limit.`,
-          details: {
-            "Episode ID": episodeId,
-            "Current minutes": `${deepgramCheck.current}`,
-            "Limit": `${deepgramCheck.limit}`,
-          },
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 10 * 60 * 1000);
+
+      try {
+        const deepgramCheck = await checkDeepgramUsage(5);
+        if (!deepgramCheck.allowed) {
+          await db
+            .update(episodes)
+            .set({ status: "failed", updatedAt: new Date() })
+            .where(eq(episodes.id, episodeId));
+          await notifyAdmin({
+            subject: "Deepgram Minute Limit — Transcription Blocked",
+            message: `Transcription for episode was blocked because Deepgram is near the free tier limit.`,
+            details: {
+              "Episode ID": episodeId,
+              "Current minutes": `${deepgramCheck.current}`,
+              Limit: `${deepgramCheck.limit}`,
+            },
+          });
+          throw new Error(
+            `FREE_TIER_LIMIT: Deepgram at ${deepgramCheck.current}/${deepgramCheck.limit} minutes this month`
+          );
+        }
+
+        const response = await deepgram.listen.v1.media.transcribeUrl({
+          url: signedFileUrl,
+          model: "nova-2",
+          smart_format: true,
+          punctuate: true,
+          diarize: true,
+          paragraphs: true,
+          utterances: true,
+          detect_language: true,
         });
-        throw new Error(
-          `FREE_TIER_LIMIT: Deepgram at ${deepgramCheck.current}/${deepgramCheck.limit} minutes this month`
-        );
+
+        const words =
+          (response as any)?.results?.channels?.[0]?.alternatives?.[0]?.words;
+        const durationSeconds = words?.slice(-1)?.[0]?.end || 0;
+        const durationMinutes = Math.ceil(durationSeconds / 60);
+        await incrementUsage("deepgramMinutes", durationMinutes);
+
+        return {
+          text:
+            (response as any)?.results?.channels?.[0]?.alternatives?.[0]
+              ?.transcript || "",
+          duration: Math.round(durationSeconds),
+          utterances: (response as any)?.results?.utterances || [],
+        };
+      } finally {
+        clearTimeout(timeout);
       }
-
-      const response = await deepgram.listen.v1.media.transcribeUrl({
-        url: signedFileUrl,
-        model: "nova-2",
-        smart_format: true,
-        punctuate: true,
-        diarize: true,
-        paragraphs: true,
-        utterances: true,
-        detect_language: true,
-      });
-
-      // Track actual usage
-      const words = (response as any)?.results?.channels?.[0]?.alternatives?.[0]?.words;
-      const durationSeconds = words?.slice(-1)?.[0]?.end || 0;
-      const durationMinutes = Math.ceil(durationSeconds / 60);
-      await incrementUsage("deepgramMinutes", durationMinutes);
-
-      return {
-        text:
-          (response as any)?.results?.channels?.[0]?.alternatives?.[0]?.transcript || "",
-        duration: Math.round(durationSeconds),
-        utterances: (response as any)?.results?.utterances || [],
-      };
     });
 
     // Step 4: Update episode with transcript
@@ -111,7 +161,7 @@ export const processEpisode = inngest.createFunction(
         .where(eq(episodes.id, episodeId));
     });
 
-    // Step 5: Detect clips (simple heuristic — find long utterances with keywords)
+    // Step 5: Detect clips (timeout: 5 minutes)
     const detectedClips = await step.run("detect-clips", async () => {
       const utterances = transcript.utterances as Array<{
         start: number;
@@ -123,7 +173,6 @@ export const processEpisode = inngest.createFunction(
 
       if (!utterances.length) return [];
 
-      // Find high-confidence segments that are 15-120 seconds long
       const candidates: Array<{
         title: string;
         startTime: number;
@@ -131,7 +180,6 @@ export const processEpisode = inngest.createFunction(
         confidence: number;
       }> = [];
 
-      // Group consecutive utterances into potential clips
       let clipStart = utterances[0].start;
       let clipText = "";
       let clipConfidence = 0;
@@ -140,8 +188,11 @@ export const processEpisode = inngest.createFunction(
       for (const utt of utterances) {
         const clipDuration = utt.end - clipStart;
 
-        if (clipDuration > 120 || (clipDuration > 30 && utt.start - (clipStart + clipText.length / 10) > 5)) {
-          // Save current clip if long enough
+        if (
+          clipDuration > 120 ||
+          (clipDuration > 30 &&
+            utt.start - (clipStart + clipText.length / 10) > 5)
+        ) {
           if (clipDuration >= 15 && utteranceCount >= 2) {
             const title =
               clipText.slice(0, 60).trim() +
@@ -153,7 +204,6 @@ export const processEpisode = inngest.createFunction(
               confidence: Math.round((clipConfidence / utteranceCount) * 100),
             });
           }
-          // Start new clip
           clipStart = utt.start;
           clipText = utt.transcript;
           clipConfidence = utt.confidence;
@@ -165,7 +215,6 @@ export const processEpisode = inngest.createFunction(
         }
       }
 
-      // Return top 5 by confidence
       return candidates
         .sort((a, b) => b.confidence - a.confidence)
         .slice(0, 5);
@@ -187,7 +236,74 @@ export const processEpisode = inngest.createFunction(
       );
     });
 
-    // Step 7: Mark episode as completed
+    // Step 7: Generate content (parallel fan-out for all 4 formats)
+    await step.run("generate-content", async () => {
+      if (!transcript.text) return;
+
+      const llmCheck = await checkLLMUsage(userId);
+      if (!llmCheck.allowed) return;
+
+      const voiceProfile = await getOrCreateDefaultProfile(userId);
+
+      // Create pending rows and capture their IDs keyed by format
+      const insertedRows = await db
+        .insert(contentOutputs)
+        .values(
+          CONTENT_FORMATS.map((format) => ({
+            episodeId,
+            userId,
+            format,
+            voiceProfileId: voiceProfile.id,
+            status: "generating" as const,
+          }))
+        )
+        .returning({ id: contentOutputs.id, format: contentOutputs.format });
+
+      const rowByFormat = Object.fromEntries(
+        insertedRows.map((r) => [r.format, r.id])
+      );
+
+      const voice = {
+        tone: voiceProfile.tone,
+        exampleOutput: voiceProfile.exampleOutput,
+        avoidWords: voiceProfile.avoidWords,
+      };
+
+      // Generate all 4 formats in parallel
+      const results = await Promise.allSettled(
+        CONTENT_FORMATS.map(async (format) => {
+          const result = await generateContent(transcript.text, format, voice);
+          return { format, ...result };
+        })
+      );
+
+      // Update each row based on result
+      for (const result of results) {
+        if (result.status === "fulfilled") {
+          const { format, content, wordCount } = result.value;
+          await db
+            .update(contentOutputs)
+            .set({
+              content,
+              wordCount,
+              status: "completed",
+              updatedAt: new Date(),
+            })
+            .where(eq(contentOutputs.id, rowByFormat[format]));
+          await incrementLLMUsage(userId);
+        } else {
+          // Find the format from the promise index
+          const idx = results.indexOf(result);
+          const format = CONTENT_FORMATS[idx];
+          await db
+            .update(contentOutputs)
+            .set({ status: "failed", updatedAt: new Date() })
+            .where(eq(contentOutputs.id, rowByFormat[format]));
+        }
+      }
+    });
+
+    // Step 8: Mark episode as completed
     await step.run("mark-complete", async () => {
       await db
         .update(episodes)
