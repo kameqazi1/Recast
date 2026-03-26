@@ -1,6 +1,7 @@
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { UserProfile } from "@clerk/nextjs";
+import { VoiceProfilesSection } from "./voice-profiles";
 
 export default async function SettingsPage() {
   const { userId } = await auth();
@@ -15,7 +16,11 @@ export default async function SettingsPage() {
         </h2>
       </section>
 
-      <div className="bg-surface-low rounded-xl p-8 border border-outline/10">
+      {/* Voice Profiles */}
+      <VoiceProfilesSection />
+
+      {/* Account Settings (Clerk) */}
+      <div className="bg-surface-low rounded-xl p-8 border border-outline/10 mt-8">
         <UserProfile
           appearance={{
             elements: {

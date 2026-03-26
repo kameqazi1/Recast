@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { StatusBadge } from "@/components/status-badge";
 import {
@@ -17,6 +17,14 @@ import {
   Trash2,
   RefreshCw,
   Loader2,
+  FileText,
+  Twitter,
+  ListChecks,
+  Mail,
+  Copy,
+  Download,
+  Check,
+  Wand2,
 } from "lucide-react";
 
 interface Episode {
@@ -37,6 +45,22 @@ interface Clip {
   endTime: number;
   confidence: number | null;
 }
+
+interface ContentOutput {
+  id: string;
+  format: string;
+  content: string | null;
+  wordCount: number | null;
+  status: string;
+  voiceProfileId: string | null;
+}
+
+const FORMAT_META: Record<string, { label: string; icon: typeof FileText }> = {
+  blog_post: { label: "Blog Post", icon: FileText },
+  tweet_thread: { label: "Tweet Thread", icon: Twitter },
+  show_notes: { label: "Show Notes", icon: ListChecks },
+  newsletter: { label: "Newsletter", icon: Mail },
+};
 
 function formatTime(seconds: number): string {
   const h = Math.floor(seconds / 3600);
@@ -61,9 +85,97 @@ export function EpisodeDetailClient({
   clips: Clip[];
 }) {
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState<"transcript" | "clips" | "settings">("transcript");
+  const [activeTab, setActiveTab] = useState<"transcript" | "clips" | "content" | "settings">("transcript");
   const [deleting, setDeleting] = useState(false);
   const [retrying, setRetrying] = useState(false);
+  const [contentOutputs, setContentOutputs] = useState<ContentOutput[]>([]);
+  const [activeFormat, setActiveFormat] = useState<string>("blog_post");
+  const [generating, setGenerating] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const [regeneratingFormat, setRegeneratingFormat] = useState<string | null>(null);
+
+  // Poll for content outputs
+  const fetchContent = useCallback(async () => {
+    try {
+      const res = await fetch(`/api/episodes/${episode.id}/content`);
+      if (res.ok) {
+        const data = await res.json();
+        setContentOutputs(data.outputs);
+      }
+    } catch { /* ignore polling errors */ }
+  }, [episode.id]);
+
+  useEffect(() => {
+    fetchContent();
+  }, [fetchContent]);
+
+  useEffect(() => {
+    const hasActive = contentOutputs.some(
+      (o) => o.status === "pending" || o.status === "generating"
+    );
+    if (!hasActive) return;
+
+    let elapsed = 0;
+    const maxDuration = 120000; // 2 min max polling
+    const interval = setInterval(() => {
+      elapsed += 5000;
+      if (elapsed > maxDuration) {
+        clearInterval(interval);
+        return;
+      }
+      fetchContent();
+    }, elapsed > 30000 ? 10000 : 5000); // backoff to 10s after 30s
+
+    return () => clearInterval(interval);
+  }, [contentOutputs, fetchContent]);
+
+  const handleGenerate = async () => {
+    setGenerating(true);
+    try {
+      const res = await fetch(`/api/episodes/${episode.id}/generate`, {
+        method: "POST",
+      });
+      if (res.ok) {
+        await fetchContent();
+        setActiveTab("content");
+      }
+    } finally {
+      setGenerating(false);
+    }
+  };
+
+  const handleRegenerate = async (format: string) => {
+    setRegeneratingFormat(format);
+    try {
+      await fetch(`/api/episodes/${episode.id}/regenerate`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ format }),
+      });
+      await fetchContent();
+    } finally {
+      setRegeneratingFormat(null);
+    }
+  };
+
+  const handleCopy = async (text: string) => {
+    await navigator.clipboard.writeText(text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  const handleDownload = (text: string, format: string) => {
+    const blob = new Blob([text], { type: "text/markdown" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `${episode.title.replace(/[^a-z0-9]/gi, "-").toLowerCase()}-${format}.md`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const activeOutput = contentOutputs.find((o) => o.format === activeFormat);
+  const hasContent = contentOutputs.length > 0;
 
   const handleDelete = async () => {
     if (!confirm("Delete this episode? This cannot be undone.")) return;
@@ -160,6 +272,16 @@ export function EpisodeDetailClient({
           )}
         </div>
         <div className="flex gap-3">
+          {episode.status === "completed" && !hasContent && (
+            <button
+              onClick={handleGenerate}
+              disabled={generating}
+              className="px-6 py-3 bg-gradient-to-r from-primary to-primary-dim rounded-xl text-background font-bold text-sm shadow-lg shadow-primary/30 hover:shadow-primary/50 transition-all flex items-center gap-2"
+            >
+              {generating ? <Loader2 size={16} className="animate-spin" /> : <Wand2 size={16} />}
+              Generate Content
+            </button>
+          )}
           {(episode.status === "failed" || episode.status === "uploading") && (
             <button
               onClick={handleRetry}
@@ -184,7 +306,7 @@ export function EpisodeDetailClient({
       {/* Tab Bar */}
       <section className="space-y-8">
         <div className="flex items-center gap-12 border-b border-outline/10">
-          {(["transcript", "clips", "settings"] as const).map((tab) => (
+          {(["transcript", "clips", "content", "settings"] as const).map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
@@ -196,6 +318,7 @@ export function EpisodeDetailClient({
             >
               {tab === "transcript" && "Transcript"}
               {tab === "clips" && `Clips (${clips.length})`}
+              {tab === "content" && `Content${hasContent ? ` (${contentOutputs.filter(o => o.status === "completed").length})` : ""}`}
               {tab === "settings" && "Settings"}
             </button>
           ))}
@@ -324,6 +447,152 @@ export function EpisodeDetailClient({
                     : "Clips will appear after processing completes."}
                 </p>
               </div>
+            )}
+          </div>
+        )}
+
+        {/* Content Tab */}
+        {activeTab === "content" && (
+          <div className="space-y-8">
+            {!hasContent ? (
+              <div className="text-center py-16">
+                <Wand2 size={48} className="text-text-muted mx-auto mb-4 opacity-50" />
+                <p className="text-text-muted text-lg mb-2">No content generated yet</p>
+                <p className="text-text-muted text-sm mb-6">
+                  {episode.status === "completed"
+                    ? "Click \"Generate Content\" to create blog posts, tweets, show notes, and newsletters from this episode."
+                    : "Content generation will be available after processing completes."}
+                </p>
+                {episode.status === "completed" && (
+                  <button
+                    onClick={handleGenerate}
+                    disabled={generating}
+                    className="px-6 py-3 bg-gradient-to-r from-primary to-primary-dim rounded-xl text-background font-bold text-sm shadow-lg shadow-primary/30"
+                  >
+                    {generating ? <Loader2 size={16} className="animate-spin" /> : <Wand2 size={16} />}
+                    <span className="ml-2">Generate Content</span>
+                  </button>
+                )}
+              </div>
+            ) : (
+              <>
+                {/* Format grid */}
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                  {contentOutputs.map((output) => {
+                    const meta = FORMAT_META[output.format] || { label: output.format, icon: FileText };
+                    const Icon = meta.icon;
+                    const isActive = activeFormat === output.format;
+                    return (
+                      <button
+                        key={output.id}
+                        onClick={() => setActiveFormat(output.format)}
+                        className={`p-4 rounded-xl border text-left transition-all ${
+                          isActive
+                            ? "bg-surface-high border-primary/30"
+                            : "bg-surface-low border-outline/10 hover:border-outline/30"
+                        }`}
+                      >
+                        <Icon size={20} className={isActive ? "text-primary mb-2" : "text-text-muted mb-2"} />
+                        <div className="text-sm font-medium text-text">{meta.label}</div>
+                        <div className="text-[11px] mt-1">
+                          {output.status === "completed" && (
+                            <span className="text-success">{output.wordCount} words</span>
+                          )}
+                          {output.status === "generating" && (
+                            <span className="text-primary flex items-center gap-1">
+                              <Loader2 size={10} className="animate-spin" /> Generating...
+                            </span>
+                          )}
+                          {output.status === "failed" && (
+                            <span className="text-error">Failed</span>
+                          )}
+                          {output.status === "pending" && (
+                            <span className="text-text-muted">Pending</span>
+                          )}
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* Content viewer */}
+                {activeOutput && (
+                  <div className="bg-surface-low rounded-xl border border-outline/10 overflow-hidden">
+                    <div className="flex items-center justify-between px-6 py-3 border-b border-outline/10">
+                      <span className="text-[11px] uppercase tracking-widest text-text-muted">
+                        {FORMAT_META[activeOutput.format]?.label || activeOutput.format}
+                      </span>
+                      <div className="flex items-center gap-2">
+                        {activeOutput.status === "completed" && (
+                          <>
+                            <button
+                              onClick={() => handleRegenerate(activeOutput.format)}
+                              disabled={regeneratingFormat === activeOutput.format}
+                              className="text-[11px] text-primary hover:text-primary-dim flex items-center gap-1 transition-colors"
+                            >
+                              {regeneratingFormat === activeOutput.format ? (
+                                <Loader2 size={12} className="animate-spin" />
+                              ) : (
+                                <RefreshCw size={12} />
+                              )}
+                              Regenerate
+                            </button>
+                          </>
+                        )}
+                        {activeOutput.status === "failed" && (
+                          <button
+                            onClick={() => handleRegenerate(activeOutput.format)}
+                            disabled={regeneratingFormat === activeOutput.format}
+                            className="text-[11px] text-error hover:text-error/80 flex items-center gap-1"
+                          >
+                            <RefreshCw size={12} /> Retry
+                          </button>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="p-6">
+                      {activeOutput.status === "completed" && activeOutput.content ? (
+                        <div className="prose prose-invert prose-sm max-w-none whitespace-pre-wrap text-text leading-relaxed">
+                          {activeOutput.content}
+                        </div>
+                      ) : activeOutput.status === "generating" ? (
+                        <div className="text-center py-12">
+                          <Loader2 size={24} className="animate-spin text-primary mx-auto mb-3" />
+                          <p className="text-text-muted text-sm">Generating {FORMAT_META[activeOutput.format]?.label}...</p>
+                        </div>
+                      ) : activeOutput.status === "failed" ? (
+                        <div className="text-center py-12">
+                          <p className="text-error text-sm mb-2">Generation failed</p>
+                          <p className="text-text-muted text-xs">Click Retry to try again</p>
+                        </div>
+                      ) : (
+                        <div className="text-center py-12">
+                          <p className="text-text-muted text-sm">Waiting to generate...</p>
+                        </div>
+                      )}
+                    </div>
+
+                    {activeOutput.status === "completed" && activeOutput.content && (
+                      <div className="flex items-center gap-2 px-6 py-3 border-t border-outline/10">
+                        <button
+                          onClick={() => handleCopy(activeOutput.content!)}
+                          className="px-4 py-2 bg-gradient-to-r from-primary to-primary-dim rounded-lg text-background text-xs font-bold flex items-center gap-1.5"
+                        >
+                          {copied ? <Check size={14} /> : <Copy size={14} />}
+                          {copied ? "Copied!" : "Copy"}
+                        </button>
+                        <button
+                          onClick={() => handleDownload(activeOutput.content!, activeOutput.format)}
+                          className="px-4 py-2 bg-surface-high rounded-lg text-text-muted text-xs font-medium border border-outline/20 hover:text-text flex items-center gap-1.5 transition-colors"
+                        >
+                          <Download size={14} /> Download .md
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </>
             )}
           </div>
         )}
