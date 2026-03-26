@@ -18,7 +18,7 @@ import {
   RefreshCw,
   Loader2,
   FileText,
-  Twitter,
+  MessageCircle,
   ListChecks,
   Mail,
   Copy,
@@ -57,7 +57,7 @@ interface ContentOutput {
 
 const FORMAT_META: Record<string, { label: string; icon: typeof FileText }> = {
   blog_post: { label: "Blog Post", icon: FileText },
-  tweet_thread: { label: "Tweet Thread", icon: Twitter },
+  tweet_thread: { label: "Tweet Thread", icon: MessageCircle },
   show_notes: { label: "Show Notes", icon: ListChecks },
   newsletter: { label: "Newsletter", icon: Mail },
 };
