@@ -21,6 +21,7 @@
     "@fontsource-variable/dm-sans": "^5.2.8",
     "@fontsource/dm-mono": "^5.2.7",
     "@neondatabase/serverless": "^1.0.2",
+    "baseline-browser-mapping": "^2.10.11",
     "drizzle-orm": "^0.45.1",
     "inngest": "^4.0.5",
     "lucide-react": "^1.6.0",
