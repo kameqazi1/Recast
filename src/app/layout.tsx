@@ -9,6 +9,21 @@ export const metadata: Metadata = {
   title: "Recast — AI-Powered Podcast Processing",
   description:
     "Turn episodes into viral clips, automatically. AI-powered transcription, clip detection, and video extraction.",
+  metadataBase: new URL("https://www.getrecast.app"),
+  openGraph: {
+    title: "Recast — AI-Powered Podcast Processing",
+    description:
+      "Turn episodes into viral clips, automatically. AI-powered transcription, clip detection, and video extraction.",
+    url: "https://www.getrecast.app",
+    siteName: "Recast",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Recast — AI-Powered Podcast Processing",
+    description:
+      "Turn episodes into viral clips, automatically. AI-powered transcription, clip detection, and video extraction.",
+  },
 };
 
 export default function RootLayout({

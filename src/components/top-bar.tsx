@@ -1,9 +1,16 @@
-import { Search, Bell } from "lucide-react";
+import { Search, Bell, Menu } from "lucide-react";
 
-export function TopBar() {
+export function TopBar({ onMenuClick }: { onMenuClick: () => void }) {
   return (
-    <header className="sticky top-0 z-40 w-full flex justify-between items-center h-16 px-8 bg-background/70 backdrop-blur-xl text-sm">
-      <div className="flex items-center flex-1 max-w-md">
+    <header className="sticky top-0 z-40 w-full flex justify-between items-center h-16 px-4 lg:px-8 bg-background/70 backdrop-blur-xl text-sm">
+      <div className="flex items-center gap-3 flex-1 max-w-md">
+        {/* Hamburger – mobile only */}
+        <button
+          onClick={onMenuClick}
+          className="lg:hidden text-text-muted hover:text-text"
+        >
+          <Menu size={22} />
+        </button>
         <div className="relative w-full">
           <Search
             size={16}
