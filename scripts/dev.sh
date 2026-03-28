@@ -137,4 +137,4 @@ cleanup() {
 trap cleanup SIGINT SIGTERM
 
 # Run Next.js in foreground (gets proper TTY)
-npx next dev
+npx next dev --webpack
